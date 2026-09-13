@@ -8,53 +8,55 @@
     box-sizing: border-box;
 }
 
-html,
-body {
+html {
     width: 100%;
     min-height: 100%;
 }
 
 body {
-    font-family: Georgia, "Times New Roman", serif;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    font-family:
+        "Noto Sans Devanagari",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    color: #762700;
 
     background:
         radial-gradient(
-            circle at top,
-            #ffd76a 0%,
-            #f6a623 35%,
-            #d96b00 100%
+            circle at 50% 20%,
+            #fff2bf 0%,
+            #ffd477 30%,
+            #f5a623 65%,
+            #d66a00 100%
         );
-
-    color: #5b2100;
-
-    overflow-x: hidden;
 }
 
 
 /* =========================================
-   START SCREEN
+   WELCOME / MUSIC START SCREEN
 ========================================= */
 
 .start-screen {
     position: fixed;
-
     inset: 0;
 
-    z-index: 100;
+    z-index: 9999;
 
     display: flex;
-
     justify-content: center;
     align-items: center;
-
-    text-align: center;
 
     background:
         radial-gradient(
             circle at center,
-            #ffe99a 0%,
-            #f7ae28 45%,
-            #d96b00 100%
+            #fff3c4 0%,
+            #ffd36d 45%,
+            #cf6200 100%
         );
 
     transition:
@@ -62,121 +64,101 @@ body {
         visibility 0.8s ease;
 }
 
-
-/* Hide start screen */
-
 .start-screen.hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 }
 
-
-/* Start content */
-
 .start-content {
-    padding: 30px;
+    text-align: center;
 
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-}
-
-
-/* Om */
-
-.start-om {
-    font-size: 65px;
-
-    color: #7a2600;
-
-    text-shadow:
-        0 3px 10px rgba(120, 40, 0, 0.3);
+    padding: 25px 20px;
 
     animation:
-        startGlow 2s ease-in-out infinite alternate;
+        welcomeFloat 3s ease-in-out infinite;
 }
 
 
-/* Title */
+/* =========================================
+   WELCOME SCREEN
+========================================= */
 
-.start-content h1 {
-    margin-top: 5px;
+.start-om {
+    font-size: 70px;
 
-    font-size: clamp(35px, 9vw, 60px);
+    color: #a63b00;
 
-    color: #702300;
-
-    letter-spacing: 2px;
+    margin-bottom: 5px;
 
     text-shadow:
-        1px 2px 0 #ffd76b,
-        0 5px 12px rgba(100, 30, 0, 0.25);
+        0 0 10px rgba(255, 210, 80, 0.9),
+        0 0 25px rgba(255, 130, 0, 0.5);
 }
 
+.start-content h1 {
+    font-size: clamp(34px, 8vw, 55px);
 
-/* Subtitle */
+    color: #8e2700;
+
+    margin-bottom: 8px;
+
+    text-shadow:
+        2px 2px 0 #ffd86a,
+        0 0 15px rgba(255, 255, 255, 0.7);
+}
 
 .start-content p {
-    margin-top: 8px;
+    font-size: 20px;
 
-    font-size: clamp(18px, 4vw, 25px);
+    color: #9b3600;
 
-    color: #8a3000;
-
-    font-weight: bold;
+    margin-bottom: 15px;
 }
 
-
-/* Diya */
-
 .start-diya {
-    margin-top: 20px;
-
     font-size: 55px;
 
-    filter:
-        drop-shadow(
-            0 0 12px rgba(255, 210, 60, 0.9)
-        );
+    margin-bottom: 22px;
 
     animation:
         diyaGlow 1.5s ease-in-out infinite alternate;
 }
 
 
-/* Start button */
+/* =========================================
+   START BUTTON
+========================================= */
 
 .start-button {
-    margin-top: 28px;
+    border: none;
 
-    padding: 14px 28px;
+    padding: 14px 30px;
 
-    border: 2px solid rgba(110, 40, 0, 0.4);
-
-    border-radius: 30px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #8d3000,
-            #652000
-        );
-
-    color: #ffe9a6;
+    border-radius: 50px;
 
     font-family: inherit;
 
     font-size: 18px;
 
-    font-weight: bold;
+    font-weight: 700;
 
-    cursor: pointer;
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #a83200,
+            #d96a00,
+            #a83200
+        );
 
     box-shadow:
-        0 7px 20px rgba(80, 25, 0, 0.35);
+        0 7px 20px rgba(100, 35, 0, 0.35),
+        inset 0 1px 2px
+        rgba(255, 255, 255, 0.35);
+
+    cursor: pointer;
 
     transition:
         transform 0.2s ease,
@@ -187,37 +169,71 @@ body {
     transform: scale(1.05);
 
     box-shadow:
-        0 10px 25px rgba(80, 25, 0, 0.4);
+        0 10px 28px
+        rgba(100, 35, 0, 0.45);
 }
 
 .start-button:active {
-    transform: scale(0.96);
-}
-
-
-/* Small text */
-
-.start-content small {
-    margin-top: 12px;
-
-    color: #7c2c00;
-
-    font-size: 13px;
+    transform: scale(0.97);
 }
 
 
 /* =========================================
-   START SCREEN ANIMATION
+   START SCREEN TEXT
 ========================================= */
 
-@keyframes startGlow {
+.start-content h4 {
+    margin-top: 28px;
+    margin-bottom: 0;
+
+    font-size: 17px;
+
+    color: #873300;
+}
+
+.start-content h5 {
+    margin-top: 18px;
+
+    font-size: 15px;
+
+    color: #873300;
+}
+
+
+/* =========================================
+   WELCOME ANIMATIONS
+========================================= */
+
+@keyframes welcomeFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+@keyframes diyaGlow {
 
     from {
         transform: scale(1);
+
+        filter:
+            drop-shadow(
+                0 0 5px #ffb300
+            );
     }
 
     to {
         transform: scale(1.08);
+
+        filter:
+            drop-shadow(
+                0 0 20px #ff7b00
+            );
     }
 }
 
@@ -229,17 +245,13 @@ body {
 .page {
     position: relative;
 
+    width: 100%;
     min-height: 100vh;
 
-    width: 100%;
-
-    padding: 20px 15px 30px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
+    padding:
+        20px
+        15px
+        30px;
 
     overflow: hidden;
 }
@@ -252,64 +264,68 @@ body {
 .background-glow {
     position: absolute;
 
-    width: 700px;
-    height: 700px;
+    width: 650px;
+    height: 650px;
 
-    top: -300px;
     left: 50%;
+    top: 35%;
 
-    transform: translateX(-50%);
-
-    background:
-        rgba(255, 245, 180, 0.35);
+    transform:
+        translate(-50%, -50%);
 
     border-radius: 50%;
 
-    filter: blur(50px);
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 240, 150, 0.5),
+            rgba(255, 190, 0, 0.15),
+            transparent 70%
+        );
 
     pointer-events: none;
 }
 
 
 /* =========================================
-   RINGS
+   BACKGROUND RINGS
 ========================================= */
 
 .ring {
     position: absolute;
 
     left: 50%;
-    top: 45%;
+    top: 40%;
 
     transform:
         translate(-50%, -50%);
 
-    border:
-        1px solid rgba(
-            255,
-            230,
-            130,
-            0.25
-        );
-
     border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(255, 220, 110, 0.3);
 
     pointer-events: none;
 }
 
 .ring-1 {
-    width: 500px;
-    height: 500px;
+    width: 600px;
+    height: 600px;
 }
 
 .ring-2 {
-    width: 750px;
-    height: 750px;
+    width: 850px;
+    height: 850px;
+
+    opacity: 0.45;
 }
 
 .ring-3 {
-    width: 1000px;
-    height: 1000px;
+    width: 1100px;
+    height: 1100px;
+
+    opacity: 0.25;
 }
 
 
@@ -320,56 +336,42 @@ body {
 .header {
     position: relative;
 
-    z-index: 5;
+    z-index: 3;
 
     text-align: center;
 
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .om {
-    font-size: 40px;
+    font-size: 55px;
 
-    color: #8b3000;
-
-    margin-bottom: 2px;
+    color: #a53600;
 
     text-shadow:
-        0 2px 4px rgba(
-            255,
-            240,
-            150,
-            0.7
-        );
+        0 0 8px #ffd66b,
+        0 0 20px
+        rgba(255, 145, 0, 0.45);
 }
 
 .header h1 {
     font-size:
-        clamp(30px, 6vw, 50px);
+        clamp(34px, 6vw, 52px);
 
-    color: #7a2600;
-
-    letter-spacing: 2px;
+    color: #8d2900;
 
     text-shadow:
-        1px 2px 0 #ffd66b,
-        0 4px 10px rgba(
-            120,
-            40,
-            0,
-            0.25
-        );
+        2px 2px 0 #ffd76b,
+        0 0 12px
+        rgba(255, 255, 255, 0.65);
 }
 
 .header p {
-    margin-top: 5px;
+    margin-top: 3px;
 
-    font-size:
-        clamp(16px, 3vw, 22px);
+    font-size: 20px;
 
-    color: #8d3500;
-
-    font-weight: bold;
+    color: #9b3900;
 }
 
 
@@ -380,82 +382,58 @@ body {
 .slideshow-wrapper {
     position: relative;
 
-    z-index: 5;
+    z-index: 3;
 
     width:
-        min(92vw, 620px);
+        min(96vw, 720px);
 
-    margin-top: 5px;
+    margin: 0 auto;
 }
-
-
-/* =========================================
-   SLIDESHOW
-========================================= */
 
 .slideshow {
     position: relative;
 
     width: 100%;
+
+    touch-action: pan-y;
 }
 
 
 /* =========================================
    PHOTO CARD
+   NO BOX
 ========================================= */
 
-.photo-card.slide {
-    display: none;
-
+.photo-card {
     width: 100%;
 
-    padding: 15px;
+    padding: 0;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255, 244, 200, 0.96),
-            rgba(255, 221, 137, 0.94)
-        );
+    text-align: center;
 
-    border:
-        2px solid rgba(
-            133,
-            61,
-            0,
-            0.35
-        );
+    background: transparent;
 
-    border-radius: 25px;
+    border: none;
 
-    box-shadow:
-        0 15px 35px rgba(
-            103,
-            38,
-            0,
-            0.28
-        ),
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.65);
+    box-shadow: none;
+}
+
+.slide {
+    display: none;
 
     animation:
-        slideAppear 0.45s ease;
+        slideAppear 0.5s ease;
 }
 
-.photo-card.slide.active {
+.slide.active {
     display: block;
 }
-
-
-/* =========================================
-   SLIDE APPEAR
-========================================= */
 
 @keyframes slideAppear {
 
     from {
         opacity: 0;
-        transform: scale(0.97);
+        transform: scale(0.98);
     }
 
     to {
@@ -466,70 +444,79 @@ body {
 
 
 /* =========================================
-   CARD TITLE
+   PHOTO TITLE
 ========================================= */
 
 .card-title {
-    text-align: center;
+    margin-bottom: 8px;
 
     font-size:
         clamp(20px, 4vw, 28px);
 
-    font-weight: bold;
+    font-weight: 700;
 
-    color: #782500;
-
-    margin-bottom: 12px;
+    color: #7d2800;
 
     text-shadow:
-        0 1px 1px
-        rgba(255, 240, 160, 0.8);
+        1px 1px 0 #ffd66b,
+        0 0 8px
+        rgba(255, 255, 255, 0.7);
 }
 
 
 /* =========================================
-   IMAGE BOX
+   PHOTO AREA
 ========================================= */
 
 .image-box {
-    width: 100%;
+    width:
+        min(96vw, 700px);
 
     height:
-        min(65vh, 500px);
+        min(72vh, 600px);
 
-    min-height: 280px;
+    margin: 0 auto;
+
+    padding: 0;
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
-
-    background:
-        rgba(110, 45, 0, 0.08);
-
-    border-radius: 18px;
 
     overflow: hidden;
 
-    border:
-        1px solid rgba(
-            120,
-            50,
-            0,
-            0.2
-        );
+    background: transparent;
+
+    border: none;
+
+    border-radius: 0;
+
+    box-shadow: none;
 }
+
+
+/* =========================================
+   IMAGE
+========================================= */
 
 .image-box img {
     width: 100%;
     height: 100%;
 
-    object-fit: contain;
-
     display: block;
 
-    border-radius: 14px;
+    object-fit: contain;
+
+    object-position: center;
+
+    background: transparent;
+
+    border: none;
+
+    border-radius: 0;
+
+    box-shadow: none;
 }
 
 
@@ -538,38 +525,25 @@ body {
 ========================================= */
 
 .ram-ganapati-collage {
-    width: 100%;
+    width:
+        min(96vw, 700px);
 
     height:
-        min(65vh, 500px);
+        min(72vh, 600px);
+
+    margin: 0 auto;
+
+    padding: 0;
 
     display: grid;
 
     grid-template-columns:
         1fr 1fr;
 
-    gap: 10px;
+    gap: 5px;
 
-    padding: 6px;
-
-    background:
-        rgba(110, 45, 0, 0.07);
-
-    border-radius: 18px;
-
-    border:
-        1px solid rgba(
-            120,
-            50,
-            0,
-            0.15
-        );
+    background: transparent;
 }
-
-
-/* =========================================
-   COLLAGE PHOTO
-========================================= */
 
 .collage-photo {
     width: 100%;
@@ -577,25 +551,13 @@ body {
 
     overflow: hidden;
 
-    border-radius: 14px;
+    background: transparent;
 
-    background: #f4c66a;
+    border: none;
 
-    border:
-        2px solid rgba(
-            110,
-            42,
-            0,
-            0.22
-        );
+    border-radius: 0;
 
-    box-shadow:
-        0 5px 14px rgba(
-            80,
-            30,
-            0,
-            0.25
-        );
+    box-shadow: none;
 }
 
 .collage-photo img {
@@ -604,14 +566,18 @@ body {
 
     display: block;
 
-    object-fit: cover;
+    object-fit: contain;
 
-    border-radius: 12px;
+    border: none;
+
+    border-radius: 0;
+
+    box-shadow: none;
 }
 
 
 /* =========================================
-   SLIDE BUTTONS
+   NAVIGATION BUTTONS
 ========================================= */
 
 .slide-button {
@@ -622,55 +588,47 @@ body {
     transform:
         translateY(-50%);
 
-    width: 45px;
-    height: 45px;
-
-    border: none;
+    width: 48px;
+    height: 48px;
 
     border-radius: 50%;
 
+    border:
+        2px solid
+        rgba(255, 220, 120, 0.8);
+
     background:
-        rgba(106, 38, 0, 0.78);
+        rgba(125, 45, 0, 0.75);
 
-    color: #ffe9a6;
+    color: #fff3c4;
 
-    font-size: 22px;
-
-    cursor: pointer;
-
-    z-index: 10;
+    font-size: 25px;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease;
+    cursor: pointer;
+
+    z-index: 10;
 }
 
 .slide-button:hover {
     background:
-        rgba(83, 26, 0, 0.95);
+        rgba(110, 35, 0, 0.95);
 
     transform:
         translateY(-50%)
-        scale(1.08);
+        scale(1.07);
 }
 
-.slide-button:active {
-    transform:
-        translateY(-50%)
-        scale(0.95);
+.prev {
+    left: -10px;
 }
 
-.slide-button.prev {
-    left: -22px;
-}
-
-.slide-button.next {
-    right: -22px;
+.next {
+    right: -10px;
 }
 
 
@@ -686,12 +644,12 @@ body {
 
     gap: 8px;
 
-    margin-top: 14px;
+    margin-top: 10px;
 }
 
 .dot {
-    width: 9px;
-    height: 9px;
+    width: 10px;
+    height: 10px;
 
     padding: 0;
 
@@ -700,19 +658,15 @@ body {
     border-radius: 50%;
 
     background:
-        rgba(101, 38, 0, 0.35);
+        rgba(125, 45, 0, 0.35);
 
     cursor: pointer;
-
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease;
 }
 
 .dot.active {
-    background: #702300;
+    background: #8f2f00;
 
-    transform: scale(1.45);
+    transform: scale(1.35);
 }
 
 
@@ -723,42 +677,25 @@ body {
 .diyas {
     position: relative;
 
-    z-index: 5;
-
-    width:
-        min(90vw, 500px);
+    z-index: 3;
 
     display: flex;
 
-    justify-content: space-between;
+    justify-content: center;
 
-    margin-top: 18px;
+    gap: 90px;
+
+    margin-top: 15px;
 }
 
 .diya {
     font-size: 38px;
 
-    filter:
-        drop-shadow(
-            0 0 8px
-            rgba(255, 210, 70, 0.8)
-        );
-
     animation:
-        diyaGlow 1.8s
+        diyaGlow
+        1.4s
         ease-in-out
         infinite alternate;
-}
-
-@keyframes diyaGlow {
-
-    from {
-        transform: scale(1);
-    }
-
-    to {
-        transform: scale(1.08);
-    }
 }
 
 
@@ -769,17 +706,17 @@ body {
 .message {
     position: relative;
 
-    z-index: 5;
+    z-index: 3;
 
     text-align: center;
 
-    margin-top: 12px;
+    margin-top: 15px;
 }
 
 .message h2 {
     font-size: 27px;
 
-    color: #722400;
+    color: #8c2b00;
 }
 
 .message p {
@@ -787,38 +724,17 @@ body {
 
     font-size: 16px;
 
-    color: #8b3a00;
+    color: #8b3b00;
 
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .stars {
-    margin-top: 7px;
+    margin-top: 8px;
 
-    font-size: 20px;
+    color: #9b3a00;
 
-    color: #8a3500;
-
-    letter-spacing: 8px;
-}
-
-
-/* =========================================
-   FOOTER
-========================================= */
-
-.footer {
-    position: relative;
-
-    z-index: 5;
-
-    margin-top: 14px;
-
-    font-size: 16px;
-
-    color: #7d2b00;
-
-    font-weight: bold;
+    font-size: 18px;
 }
 
 
@@ -831,136 +747,78 @@ body {
 
     inset: 0;
 
+    z-index: 20;
+
     pointer-events: none;
 
     overflow: hidden;
-
-    z-index: 20;
 }
 
 .petal {
-    position: absolute;
+    position: fixed;
 
-    top: -50px;
-
-    width: 16px;
-    height: 24px;
+    top: -30px;
 
     border-radius:
-        70% 30% 65% 35%;
-
-    background:
-        radial-gradient(
-            ellipse at 35% 25%,
-            rgba(255, 190, 205, 0.95) 0%,
-            rgba(235, 70, 100, 0.95) 35%,
-            rgba(175, 25, 55, 0.95) 75%,
-            rgba(120, 10, 35, 0.90) 100%
-        );
+        70% 30%
+        65% 35%
+        40% 60%
+        35% 65%;
 
     box-shadow:
-        inset 2px 2px 4px
-        rgba(255, 220, 225, 0.45),
+        inset -2px -2px 3px
+        rgba(90, 0, 20, 0.3),
 
-        inset -2px -3px 5px
-        rgba(100, 0, 25, 0.25),
+        inset 2px 2px 3px
+        rgba(255, 255, 255, 0.35),
 
         0 2px 5px
-        rgba(100, 0, 20, 0.25);
+        rgba(90, 0, 20, 0.2);
 
-    opacity: 0.9;
-
-    transform-origin: 50% 30%;
+    filter:
+        drop-shadow(
+            0 2px 2px
+            rgba(80, 0, 0, 0.18)
+        );
 
     animation:
-        rosePetalFall
+        fallPetal
         linear
         forwards;
 }
 
-
-/* Petal fold */
-
-.petal::after {
-    content: "";
-
-    position: absolute;
-
-    width: 45%;
-    height: 70%;
-
-    left: 28%;
-    top: 10%;
-
-    border-left:
-        1px solid
-        rgba(255, 210, 220, 0.35);
-
-    border-radius: 50%;
-
-    transform: rotate(15deg);
-}
-
-
-/* Petal animation */
-
-@keyframes rosePetalFall {
+@keyframes fallPetal {
 
     0% {
-
-        top: -50px;
-
-        opacity: 0;
-
         transform:
-            translateX(0)
-            rotate(0deg)
-            rotateY(0deg)
-            scale(0.8);
-    }
-
-    10% {
-        opacity: 0.9;
+            translate3d(
+                0,
+                -30px,
+                0
+            )
+            rotate(0deg);
     }
 
     25% {
-
-        transform:
-            translateX(35px)
-            rotate(90deg)
-            rotateY(80deg)
-            scale(1);
+        margin-left: 25px;
     }
 
     50% {
-
-        transform:
-            translateX(-30px)
-            rotate(200deg)
-            rotateY(160deg)
-            scale(0.9);
+        margin-left: -20px;
     }
 
     75% {
-
-        transform:
-            translateX(45px)
-            rotate(290deg)
-            rotateY(250deg)
-            scale(1.05);
+        margin-left: 30px;
     }
 
     100% {
-
-        top: 110vh;
-
-        opacity: 0;
-
         transform:
-            translateX(-35px)
-            rotate(420deg)
-            rotateY(360deg)
-            scale(0.85);
+            translate3d(
+                -10px,
+                110vh,
+                0
+            )
+            rotate(540deg);
     }
 }
 
@@ -971,252 +829,492 @@ body {
 
 @media (max-width: 800px) {
 
-    .slideshow-wrapper {
-        width:
-            min(94vw, 620px);
-    }
-
-    .image-box {
-        height:
-            min(65vh, 500px);
-    }
-
-    .ram-ganapati-collage {
-        height:
-            min(65vh, 500px);
-    }
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media (max-width: 650px) {
-
     .page {
         padding:
-            12px 8px 25px;
+            15px
+            8px
+            25px;
     }
-
-    .header {
-        margin-bottom: 8px;
-    }
-
-    .om {
-        font-size: 32px;
-    }
-
-    .header h1 {
-        font-size: 30px;
-    }
-
-    .header p {
-        font-size: 16px;
-    }
-
-    .slideshow-wrapper {
-        width: 96vw;
-
-        margin-top: 2px;
-    }
-
-    .photo-card.slide {
-        padding: 8px;
-
-        border-radius: 20px;
-    }
-
-    .card-title {
-        font-size: 21px;
-
-        margin-bottom: 8px;
-    }
-
-    .image-box {
-
-        width: 100%;
-
-        height: 68vh;
-
-        min-height: 380px;
-
-        border-radius: 15px;
-    }
-
-    .image-box img {
-        width: 100%;
-        height: 100%;
-
-        object-fit: contain;
-
-        border-radius: 12px;
-    }
-
-
-    /* Mobile collage */
-
-    .ram-ganapati-collage {
-
-        width: 100%;
-
-        height: 68vh;
-
-        min-height: 380px;
-
-        grid-template-columns:
-            1fr 1fr;
-
-        gap: 6px;
-
-        padding: 5px;
-
-        border-radius: 14px;
-    }
-
-    .collage-photo {
-        border-radius: 10px;
-    }
-
-    .collage-photo img {
-        border-radius: 8px;
-
-        object-fit: cover;
-    }
-
-
-    /* Mobile arrows */
-
-    .slide-button {
-
-        width: 38px;
-        height: 38px;
-
-        font-size: 18px;
-    }
-
-    .slide-button.prev {
-        left: -5px;
-    }
-
-    .slide-button.next {
-        right: -5px;
-    }
-
-
-    /* Mobile diyas */
-
-    .diyas {
-        margin-top: 12px;
-    }
-
-    .diya {
-        font-size: 30px;
-    }
-
-
-    /* Mobile message */
-
-    .message h2 {
-        font-size: 24px;
-    }
-
-    .message p {
-        font-size: 14px;
-    }
-
-
-    /* Start screen */
-
-    .start-om {
-        font-size: 50px;
-    }
-
-    .start-button {
-        font-size: 16px;
-
-        padding:
-            13px 23px;
-    }
-}
-
-
-/* =========================================
-   SMALL MOBILE
-========================================= */
-
-@media (max-width: 400px) {
-
-    .page {
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-
-    .slideshow-wrapper {
-        width: 97vw;
-    }
-
-    .photo-card.slide {
-        padding: 7px;
-
-        border-radius: 18px;
-    }
-
-    .image-box {
-
-        height: 70vh;
-
-        min-height: 360px;
-    }
-
-    .ram-ganapati-collage {
-
-        height: 70vh;
-
-        min-height: 360px;
-
-        gap: 5px;
-    }
-
-    .slide-button {
-
-        width: 34px;
-        height: 34px;
-
-        font-size: 16px;
-    }
-}
-
-
-/* =========================================
-   VERY SMALL MOBILE
-========================================= */
-
-@media (max-width: 350px) {
 
     .slideshow-wrapper {
         width: 98vw;
     }
 
-    .photo-card.slide {
-        padding: 6px;
-    }
-
     .image-box {
+        width: 98vw;
 
-        height: 68vh;
+        height: 70vh;
 
-        min-height: 330px;
+        min-height: 400px;
     }
 
     .ram-ganapati-collage {
+        width: 98vw;
 
-        height: 68vh;
+        height: 70vh;
 
-        min-height: 330px;
+        min-height: 400px;
+    }
+
+    .slide-button {
+        width: 43px;
+        height: 43px;
+
+        font-size: 21px;
+    }
+
+    .prev {
+        left: 3px;
+    }
+
+    .next {
+        right: 3px;
+    }
+}
+
+
+/* =================================================
+   MOBILE
+   LARGE FULL-SCREEN PHOTO
+================================================= */
+
+@media (max-width: 600px) {
+
+    body {
+        width: 100vw;
+
+        min-height: 100dvh;
+
+        overflow-x: hidden;
+    }
+
+    .page {
+        width: 100vw;
+
+        min-height: 100dvh;
+
+        padding:
+            5px
+            0
+            10px;
+
+        overflow: hidden;
+    }
+
+
+    /* -----------------------------------------
+       HEADER
+    ----------------------------------------- */
+
+    .header {
+        margin-bottom: 2px;
+
+        padding: 0;
+    }
+
+    .om {
+        font-size: 38px;
+
+        line-height: 1;
+    }
+
+    .header h1 {
+        font-size: 30px;
+
+        line-height: 1.1;
+    }
+
+    .header p {
+        font-size: 15px;
+
+        margin-top: 2px;
+    }
+
+
+    /* -----------------------------------------
+       SLIDESHOW FULL WIDTH
+    ----------------------------------------- */
+
+    .slideshow-wrapper {
+        width: 100vw;
+
+        margin: 0;
+    }
+
+    .slideshow {
+        width: 100vw;
+
+        margin: 0;
+    }
+
+
+    /* -----------------------------------------
+       TITLE
+    ----------------------------------------- */
+
+    .card-title {
+        font-size: 21px;
+
+        line-height: 1.2;
+
+        margin-top: 3px;
+
+        margin-bottom: 4px;
+
+        padding: 0 5px;
+    }
+
+
+    /* =================================================
+       IMPORTANT:
+       PHOTO USES ALMOST THE ENTIRE REMAINING SCREEN
+    ================================================= */
+
+    .image-box {
+
+        width: 100vw;
+
+        /*
+           Use almost the complete mobile
+           screen height after header/title.
+        */
+
+        height:
+            calc(100dvh - 145px);
+
+        min-height: 0;
+
+        max-height: none;
+
+        margin: 0;
+
+        padding: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        overflow: hidden;
+
+        background: transparent;
+
+        border: none;
+
+        border-radius: 0;
+
+        box-shadow: none;
+    }
+
+
+    /*
+       IMPORTANT FOR PORTRAIT PHOTOS:
+
+       Height is the main size controller.
+       This makes portrait photos MUCH larger.
+    */
+
+    .image-box img {
+
+        width: auto;
+
+        height: 100%;
+
+        max-width: 100vw;
+
+        max-height: 100%;
+
+        display: block;
+
+        object-fit: contain;
+
+        object-position: center;
+
+        background: transparent;
+
+        border: none;
+
+        border-radius: 0;
+
+        box-shadow: none;
+    }
+
+
+    /* -----------------------------------------
+       FINAL RAM + GANAPATI COLLAGE
+    ----------------------------------------- */
+
+    .ram-ganapati-collage {
+
+        width: 100vw;
+
+        height:
+            calc(100dvh - 145px);
+
+        min-height: 0;
+
+        max-height: none;
+
+        margin: 0;
+
+        padding: 0;
+
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 2px;
+
+        background: transparent;
+    }
+
+    .collage-photo {
+
+        width: 100%;
+
+        height: 100%;
+
+        overflow: hidden;
+
+        background: transparent;
+
+        border: none;
+
+        border-radius: 0;
+
+        box-shadow: none;
+    }
+
+    .collage-photo img {
+
+        width: 100%;
+
+        height: 100%;
+
+        display: block;
+
+        object-fit: contain;
+
+        border: none;
+
+        border-radius: 0;
+
+        box-shadow: none;
+    }
+
+
+    /* -----------------------------------------
+       NAVIGATION BUTTONS
+    ----------------------------------------- */
+
+    .slide-button {
+
+        width: 42px;
+
+        height: 42px;
+
+        font-size: 21px;
+
+        top: 50%;
+
+        border-width: 1px;
+
+        background:
+            rgba(125, 45, 0, 0.72);
+    }
+
+    .prev {
+        left: 5px;
+    }
+
+    .next {
+        right: 5px;
+    }
+
+
+    /* -----------------------------------------
+       DOTS
+    ----------------------------------------- */
+
+    .slide-dots {
+
+        margin-top: 5px;
+
+        gap: 7px;
+    }
+
+    .dot {
+
+        width: 8px;
+
+        height: 8px;
+    }
+
+
+    /* -----------------------------------------
+       DIYAS
+    ----------------------------------------- */
+
+    .diyas {
+
+        gap: 55px;
+
+        margin-top: 5px;
+    }
+
+    .diya {
+
+        font-size: 28px;
+    }
+
+
+    /* -----------------------------------------
+       MESSAGE
+    ----------------------------------------- */
+
+    .message {
+
+        margin-top: 5px;
+    }
+
+    .message h2 {
+
+        font-size: 21px;
+    }
+
+    .message p {
+
+        font-size: 12px;
+    }
+
+
+    /* -----------------------------------------
+       WELCOME SCREEN
+    ----------------------------------------- */
+
+    .start-content {
+
+        padding:
+            15px
+            12px;
+    }
+
+    .start-om {
+
+        font-size: 52px;
+    }
+
+    .start-content h1 {
+
+        font-size: 31px;
+    }
+
+    .start-content p {
+
+        font-size: 17px;
+    }
+
+    .start-diya {
+
+        font-size: 43px;
+
+        margin-bottom: 17px;
+    }
+
+    .start-button {
+
+        padding:
+            13px
+            23px;
+
+        font-size: 16px;
+    }
+
+    .start-content h4 {
+
+        margin-top: 25px;
+
+        font-size: 15px;
+    }
+
+    .start-content h5 {
+
+        margin-top: 15px;
+
+        font-size: 13px;
+    }
+}
+
+
+/* =================================================
+   VERY SMALL MOBILE PHONES
+================================================= */
+
+@media (max-width: 380px) {
+
+    .page {
+        padding-top: 3px;
+    }
+
+    .om {
+        font-size: 34px;
+    }
+
+    .header h1 {
+        font-size: 27px;
+    }
+
+    .header p {
+        font-size: 14px;
     }
 
     .card-title {
         font-size: 19px;
+    }
+
+
+    /*
+       Slightly more room for the photo
+       on smaller phones.
+    */
+
+    .image-box {
+
+        height:
+            calc(100dvh - 130px);
+    }
+
+    .ram-ganapati-collage {
+
+        height:
+            calc(100dvh - 130px);
+    }
+
+
+    .slide-button {
+
+        width: 37px;
+
+        height: 37px;
+
+        font-size: 18px;
+    }
+
+    .prev {
+        left: 3px;
+    }
+
+    .next {
+        right: 3px;
+    }
+
+    .diyas {
+        gap: 40px;
+    }
+
+    .diya {
+        font-size: 25px;
     }
 }

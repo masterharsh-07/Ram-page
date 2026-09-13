@@ -1,5 +1,5 @@
 /* =========================================
-   START SCREEN + MUSIC
+   MUSIC
 ========================================= */
 
 const startScreen =
@@ -13,76 +13,85 @@ const bgMusic =
 
 
 /*
-   The visitor reaches this page by scanning
-   the QR code.
+    Music starts only after the visitor
+    interacts with the welcome screen.
 
-   The first tap starts the music.
-   There is NO mute button.
+    This is necessary because mobile browsers
+    normally block sound autoplay.
 */
 
 if (startButton && bgMusic) {
 
-    startButton.addEventListener("click", async () => {
+    startButton.addEventListener(
+        "click",
+        async function () {
 
-        try {
+            try {
 
-            /*
-               Start music after user's tap.
-               This is allowed by mobile browsers.
-            */
+                /*
+                    Set volume.
+                */
 
-            bgMusic.volume = 1.0;
-
-            await bgMusic.play();
-
-            console.log(
-                "Devotional music started."
-            );
+                bgMusic.volume = 1.0;
 
 
-            /*
-               Hide the starting screen
-            */
+                /*
+                    Start music.
+                */
 
-            if (startScreen) {
+                await bgMusic.play();
 
-                startScreen.classList.add(
-                    "hidden"
+
+                console.log(
+                    "Music started successfully."
                 );
+
+
+                /*
+                    Hide welcome screen.
+                */
+
+                if (startScreen) {
+
+                    startScreen.classList.add(
+                        "hidden"
+                    );
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Music could not start:",
+                    error
+                );
+
+
+                /*
+                    Still open webpage if
+                    browser refuses audio.
+                */
+
+                if (startScreen) {
+
+                    startScreen.classList.add(
+                        "hidden"
+                    );
+
+                }
 
             }
 
         }
-
-        catch (error) {
-
-            console.error(
-                "Audio could not start:",
-                error
-            );
-
-            /*
-               Even if audio fails,
-               continue to the webpage.
-            */
-
-            if (startScreen) {
-
-                startScreen.classList.add(
-                    "hidden"
-                );
-
-            }
-
-        }
-
-    });
+    );
 
 }
 
 
 /* =========================================
-   SLIDESHOW
+   SLIDESHOW ELEMENTS
 ========================================= */
 
 const slides =
@@ -101,73 +110,94 @@ const slideDots =
     document.getElementById("slideDots");
 
 
+/* Current slide */
+
 let currentSlide = 0;
+
+
+/* Timer */
 
 let autoSlideTimer;
 
 
 /* =========================================
-   CREATE DOTS
+   CREATE SLIDE DOTS
 ========================================= */
 
-slides.forEach((slide, index) => {
+slides.forEach(
+    (slide, index) => {
 
-    const dot =
-        document.createElement("button");
-
-    dot.classList.add("dot");
-
-    dot.setAttribute(
-        "aria-label",
-        `Go to slide ${index + 1}`
-    );
+        const dot =
+            document.createElement("button");
 
 
-    if (index === 0) {
-
-        dot.classList.add("active");
-
-    }
+        dot.classList.add("dot");
 
 
-    dot.addEventListener(
-        "click",
-        () => {
-
-            currentSlide = index;
-
-            showSlide(currentSlide);
+        dot.setAttribute(
+            "aria-label",
+            `Go to slide ${index + 1}`
+        );
 
 
-            /*
-               Continue autoplay unless
-               final collage is selected.
-            */
+        /*
+            First dot active.
+        */
 
-            if (
-                currentSlide <
-                slides.length - 1
-            ) {
+        if (index === 0) {
 
-                resetAutoSlide();
-
-            }
-
-            else {
-
-                clearInterval(
-                    autoSlideTimer
-                );
-
-            }
+            dot.classList.add(
+                "active"
+            );
 
         }
-    );
 
 
-    slideDots.appendChild(dot);
+        /*
+            Dot click.
+        */
 
-});
+        dot.addEventListener(
+            "click",
+            function () {
+
+                currentSlide = index;
+
+                showSlide(
+                    currentSlide
+                );
+
+
+                /*
+                    Continue autoplay if
+                    not on final collage.
+                */
+
+                if (
+                    currentSlide <
+                    slides.length - 1
+                ) {
+
+                    resetAutoSlide();
+
+                }
+
+                else {
+
+                    clearInterval(
+                        autoSlideTimer
+                    );
+
+                }
+
+            }
+        );
+
+
+        slideDots.appendChild(dot);
+
+    }
+);
 
 
 /* =========================================
@@ -175,6 +205,10 @@ slides.forEach((slide, index) => {
 ========================================= */
 
 function showSlide(index) {
+
+    /*
+        Activate selected slide.
+    */
 
     slides.forEach(
         (slide, i) => {
@@ -188,8 +222,14 @@ function showSlide(index) {
     );
 
 
+    /*
+        Update dots.
+    */
+
     const dots =
-        document.querySelectorAll(".dot");
+        document.querySelectorAll(
+            ".dot"
+        );
 
 
     dots.forEach(
@@ -212,6 +252,10 @@ function showSlide(index) {
 
 function nextSlide() {
 
+    /*
+        Don't go beyond final slide.
+    */
+
     if (
         currentSlide <
         slides.length - 1
@@ -219,11 +263,14 @@ function nextSlide() {
 
         currentSlide++;
 
-        showSlide(currentSlide);
+        showSlide(
+            currentSlide
+        );
 
 
         /*
-           Stop at final collage
+            Stop automatically at
+            final Ram + Ganapati collage.
         */
 
         if (
@@ -252,12 +299,14 @@ function previousSlide() {
 
         currentSlide--;
 
-        showSlide(currentSlide);
+        showSlide(
+            currentSlide
+        );
 
 
         /*
-           If we return from final slide,
-           start autoplay again.
+            If visitor goes back from
+            final collage, autoplay resumes.
         */
 
         if (
@@ -282,7 +331,7 @@ if (nextBtn) {
 
     nextBtn.addEventListener(
         "click",
-        () => {
+        function () {
 
             nextSlide();
 
@@ -310,7 +359,7 @@ if (prevBtn) {
 
     prevBtn.addEventListener(
         "click",
-        () => {
+        function () {
 
             previousSlide();
 
@@ -321,8 +370,7 @@ if (prevBtn) {
 
 
 /* =========================================
-   AUTO SLIDE
-   5 SECONDS
+   AUTO SLIDESHOW
 ========================================= */
 
 function startAutoSlide() {
@@ -334,7 +382,11 @@ function startAutoSlide() {
 
     autoSlideTimer =
         setInterval(
-            () => {
+            function () {
+
+                /*
+                    Stop at final collage.
+                */
 
                 if (
                     currentSlide >=
@@ -360,7 +412,7 @@ function startAutoSlide() {
 
 
 /* =========================================
-   RESET AUTO SLIDE
+   RESET AUTOPLAY
 ========================================= */
 
 function resetAutoSlide() {
@@ -391,11 +443,15 @@ let touchStartX = 0;
 let touchEndX = 0;
 
 
+/*
+    Finger touches screen.
+*/
+
 if (slideshow) {
 
     slideshow.addEventListener(
         "touchstart",
-        (event) => {
+        function (event) {
 
             touchStartX =
                 event.changedTouches[0]
@@ -408,9 +464,13 @@ if (slideshow) {
     );
 
 
+    /*
+        Finger leaves screen.
+    */
+
     slideshow.addEventListener(
         "touchend",
-        (event) => {
+        function (event) {
 
             touchEndX =
                 event.changedTouches[0]
@@ -427,6 +487,10 @@ if (slideshow) {
 }
 
 
+/* =========================================
+   HANDLE SWIPE
+========================================= */
+
 function handleSwipe() {
 
     const swipeDistance =
@@ -434,7 +498,8 @@ function handleSwipe() {
 
 
     /*
-       Swipe left = next
+        Swipe LEFT
+        → Next slide
     */
 
     if (swipeDistance < -50) {
@@ -455,7 +520,8 @@ function handleSwipe() {
 
 
     /*
-       Swipe right = previous
+        Swipe RIGHT
+        → Previous slide
     */
 
     else if (swipeDistance > 50) {
@@ -473,10 +539,15 @@ function handleSwipe() {
 
 document.addEventListener(
     "keydown",
-    (event) => {
+    function (event) {
+
+        /*
+            Right arrow
+        */
 
         if (
-            event.key === "ArrowRight"
+            event.key ===
+            "ArrowRight"
         ) {
 
             nextSlide();
@@ -494,8 +565,13 @@ document.addEventListener(
         }
 
 
+        /*
+            Left arrow
+        */
+
         else if (
-            event.key === "ArrowLeft"
+            event.key ===
+            "ArrowLeft"
         ) {
 
             previousSlide();
@@ -525,9 +601,15 @@ const petalContainer =
     );
 
 
+/*
+    Create one rose petal.
+*/
+
 function createPetal() {
 
-    if (!petalContainer) return;
+    if (!petalContainer) {
+        return;
+    }
 
 
     const petal =
@@ -540,7 +622,7 @@ function createPetal() {
 
 
     /*
-       Random horizontal position
+        Random horizontal position.
     */
 
     petal.style.left =
@@ -548,7 +630,7 @@ function createPetal() {
 
 
     /*
-       Random size
+        Random size.
     */
 
     const size =
@@ -563,7 +645,7 @@ function createPetal() {
 
 
     /*
-       Rose colours
+        Different rose shades.
     */
 
     const roseColors = [
@@ -605,7 +687,7 @@ function createPetal() {
 
 
     /*
-       Random falling speed
+        Random falling speed.
     */
 
     const duration =
@@ -617,7 +699,7 @@ function createPetal() {
 
 
     /*
-       Random delay
+        Random starting delay.
     */
 
     petal.style.animationDelay =
@@ -625,7 +707,7 @@ function createPetal() {
 
 
     /*
-       Random starting rotation
+        Random rotation.
     */
 
     petal.style.transform =
@@ -635,12 +717,16 @@ function createPetal() {
 
 
     /*
-       Random transparency
+        Random transparency.
     */
 
     petal.style.opacity =
         Math.random() * 0.3 + 0.7;
 
+
+    /*
+        Add petal to page.
+    */
 
     petalContainer.appendChild(
         petal
@@ -648,11 +734,11 @@ function createPetal() {
 
 
     /*
-       Remove after animation
+        Remove after animation.
     */
 
     setTimeout(
-        () => {
+        function () {
 
             petal.remove();
 
@@ -673,7 +759,10 @@ setInterval(
 );
 
 
-/* Initial petals */
+/*
+    Create some petals immediately
+    when page opens.
+*/
 
 for (
     let i = 0;
