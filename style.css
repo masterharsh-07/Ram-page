@@ -1,0 +1,851 @@
+/* =====================================================
+   GLOBAL RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+
+body {
+
+    font-family:
+        "Noto Sans Devanagari",
+        Arial,
+        sans-serif;
+
+    overflow-x: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7d1f0d,
+            #c94d16,
+            #f29a24,
+            #c94d16,
+            #7d1f0d
+        );
+
+    color: #7b180b;
+}
+
+
+/* =====================================================
+   MAIN PAGE
+===================================================== */
+
+.page {
+
+    position: relative;
+
+    min-height: 100vh;
+
+    width: 100%;
+
+    overflow: hidden;
+
+    padding:
+        20px
+        30px
+        15px;
+}
+
+
+/* =====================================================
+   BACKGROUND GLOW
+===================================================== */
+
+.background-glow {
+
+    position: absolute;
+
+    width: 750px;
+    height: 750px;
+
+    left: 50%;
+    top: 42%;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 247, 170, 0.98) 0%,
+            rgba(255, 220, 95, 0.85) 30%,
+            rgba(255, 179, 45, 0.45) 60%,
+            transparent 75%
+        );
+
+    z-index: 0;
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   DECORATIVE RINGS
+===================================================== */
+
+.ring {
+
+    position: absolute;
+
+    border: 1px solid rgba(255, 239, 160, 0.35);
+
+    border-radius: 50%;
+
+    left: 50%;
+    top: 45%;
+
+    transform: translate(-50%, -50%);
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+.ring-1 {
+
+    width: 900px;
+    height: 900px;
+}
+
+
+.ring-2 {
+
+    width: 700px;
+    height: 700px;
+}
+
+
+.ring-3 {
+
+    width: 500px;
+    height: 500px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+
+    position: relative;
+
+    z-index: 10;
+
+    text-align: center;
+
+    height: 145px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.om {
+
+    font-size: 38px;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    color: #8b1e0d;
+
+    text-shadow:
+        2px 2px 3px rgba(255, 230, 100, 0.7);
+}
+
+
+.header h1 {
+
+    margin-top: 2px;
+
+    font-size: clamp(42px, 5vw, 70px);
+
+    font-weight: 800;
+
+    line-height: 1.1;
+
+    color: #791507;
+
+    text-shadow:
+        2px 3px 3px rgba(255, 218, 100, 0.75);
+}
+
+
+.jai-ram {
+
+    margin-top: 8px;
+
+    font-size: clamp(20px, 2vw, 28px);
+
+    font-weight: 700;
+
+    color: #8a210c;
+}
+
+
+/* =====================================================
+   PHOTO AREA
+===================================================== */
+
+.photo-area {
+
+    position: relative;
+
+    z-index: 5;
+
+    width: 100%;
+
+    max-width: 1250px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: stretch;
+
+    gap: 50px;
+
+    min-height: 530px;
+}
+
+
+/* =====================================================
+   PHOTO CARD
+===================================================== */
+
+.photo-card {
+
+    position: relative;
+
+    width: 46%;
+
+    max-width: 540px;
+
+    min-height: 520px;
+
+    padding: 14px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255, 248, 205, 0.18);
+
+    border:
+        2px solid rgba(255, 226, 112, 0.75);
+
+    box-shadow:
+
+        0 10px 35px
+        rgba(75, 20, 0, 0.35),
+
+        inset 0 0 30px
+        rgba(255, 220, 90, 0.18);
+
+    backdrop-filter: blur(3px);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+/* =====================================================
+   CARD TITLES
+===================================================== */
+
+.card-title {
+
+    position: relative;
+
+    z-index: 5;
+
+    width: 100%;
+
+    text-align: center;
+
+    font-size: 27px;
+
+    font-weight: 800;
+
+    color: #7b180b;
+
+    margin-bottom: 10px;
+
+    text-shadow:
+        1px 2px 2px
+        rgba(255, 220, 100, 0.8);
+}
+
+
+/* =====================================================
+   IMAGE BOX
+===================================================== */
+
+.image-box {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 455px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255, 245, 190, 0.12);
+}
+
+
+/* =====================================================
+   COMMON IMAGE
+===================================================== */
+
+.image-box img {
+
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    object-position: center;
+
+    border-radius: 10px;
+
+    filter:
+        drop-shadow(
+            0 8px 12px
+            rgba(80, 25, 0, 0.35)
+        );
+
+    transition:
+        transform 0.4s ease;
+}
+
+
+/* =====================================================
+   RAM IMAGE
+===================================================== */
+
+.ram-image {
+
+    object-fit: contain !important;
+
+    object-position: center center !important;
+}
+
+
+.ram-card:hover .ram-image {
+
+    transform: scale(1.025);
+}
+
+
+/* =====================================================
+   GANAPATI IMAGE
+===================================================== */
+
+.ganapati-image {
+
+    object-fit: contain !important;
+
+    object-position: center center !important;
+}
+
+
+.ganapati-card:hover .ganapati-image {
+
+    transform: scale(1.025);
+}
+
+
+/* =====================================================
+   DIYAS
+===================================================== */
+
+.diya {
+
+    position: absolute;
+
+    z-index: 20;
+
+    font-size: 42px;
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(255, 190, 40, 0.8)
+        );
+
+    animation:
+        diya-glow 2s ease-in-out infinite;
+}
+
+
+.diya-left {
+
+    left: 4%;
+
+    top: 78%;
+}
+
+
+.diya-right {
+
+    right: 4%;
+
+    top: 78%;
+}
+
+
+@keyframes diya-glow {
+
+    0%,
+    100% {
+
+        transform: scale(1);
+
+        filter:
+            drop-shadow(
+                0 0 5px
+                rgba(255, 180, 20, 0.6)
+            );
+    }
+
+    50% {
+
+        transform: scale(1.08);
+
+        filter:
+            drop-shadow(
+                0 0 18px
+                rgba(255, 210, 70, 1)
+            );
+    }
+}
+
+
+/* =====================================================
+   BOTTOM MESSAGE
+===================================================== */
+
+.message {
+
+    position: relative;
+
+    z-index: 10;
+
+    text-align: center;
+
+    margin-top: 12px;
+}
+
+
+.message h2 {
+
+    font-size: 36px;
+
+    font-weight: 800;
+
+    color: #7b180b;
+
+    text-shadow:
+        1px 2px 2px
+        rgba(255, 220, 100, 0.7);
+}
+
+
+.message p {
+
+    margin-top: 2px;
+
+    font-size: 19px;
+
+    font-weight: 600;
+
+    color: #8b270e;
+}
+
+
+.stars {
+
+    margin-top: 3px;
+
+    font-size: 20px;
+
+    color: #8c300e;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+
+    position: relative;
+
+    z-index: 10;
+
+    text-align: center;
+
+    margin-top: 8px;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    color: #7b180b;
+}
+
+
+/* =====================================================
+   PETAL CONTAINER
+===================================================== */
+
+#petal-container {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    z-index: 50;
+}
+
+
+/* =====================================================
+   ROSE PETALS
+===================================================== */
+
+.petal {
+
+    position: absolute;
+
+    top: -40px;
+
+    width: 17px;
+
+    height: 11px;
+
+    border-radius:
+        70% 30% 70% 30%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff4d5a,
+            #d4142c,
+            #a5081d
+        );
+
+    box-shadow:
+        0 2px 5px
+        rgba(90, 0, 10, 0.3);
+
+    opacity: 0.9;
+
+    animation:
+        petal-fall linear forwards;
+}
+
+
+@keyframes petal-fall {
+
+    0% {
+
+        transform:
+            translateY(-40px)
+            translateX(0)
+            rotate(0deg);
+
+        opacity: 0;
+    }
+
+    10% {
+
+        opacity: 0.95;
+    }
+
+    50% {
+
+        transform:
+            translateY(50vh)
+            translateX(80px)
+            rotate(180deg);
+    }
+
+    100% {
+
+        transform:
+            translateY(110vh)
+            translateX(-80px)
+            rotate(360deg);
+
+        opacity: 0.2;
+    }
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .page {
+
+        padding:
+            15px
+            18px
+            12px;
+    }
+
+
+    .header {
+
+        height: 125px;
+    }
+
+
+    .photo-area {
+
+        gap: 20px;
+
+        min-height: 450px;
+    }
+
+
+    .photo-card {
+
+        width: 48%;
+
+        min-height: 440px;
+
+        padding: 10px;
+    }
+
+
+    .image-box {
+
+        height: 375px;
+    }
+
+
+    .card-title {
+
+        font-size: 23px;
+    }
+
+
+    .message h2 {
+
+        font-size: 30px;
+    }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 650px) {
+
+    body {
+
+        overflow-x: hidden;
+    }
+
+
+    .page {
+
+        padding:
+            10px
+            10px
+            15px;
+    }
+
+
+    .header {
+
+        height: 120px;
+    }
+
+
+    .om {
+
+        font-size: 28px;
+    }
+
+
+    .header h1 {
+
+        font-size: 39px;
+    }
+
+
+    .jai-ram {
+
+        font-size: 18px;
+
+        margin-top: 5px;
+    }
+
+
+    /* Stack photos vertically */
+
+    .photo-area {
+
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 25px;
+
+        min-height: auto;
+    }
+
+
+    .photo-card {
+
+        width: 95%;
+
+        max-width: 450px;
+
+        min-height: auto;
+    }
+
+
+    .image-box {
+
+        height: 430px;
+    }
+
+
+    .card-title {
+
+        font-size: 24px;
+    }
+
+
+    .diya {
+
+        font-size: 32px;
+    }
+
+
+    .diya-left {
+
+        left: 2%;
+
+        top: 45%;
+    }
+
+
+    .diya-right {
+
+        right: 2%;
+
+        top: 45%;
+    }
+
+
+    .message {
+
+        margin-top: 25px;
+    }
+
+
+    .message h2 {
+
+        font-size: 29px;
+    }
+
+
+    .message p {
+
+        font-size: 16px;
+    }
+
+
+    .footer {
+
+        font-size: 16px;
+
+        margin-top: 7px;
+    }
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 400px) {
+
+    .header h1 {
+
+        font-size: 32px;
+    }
+
+
+    .image-box {
+
+        height: 360px;
+    }
+
+
+    .photo-card {
+
+        width: 96%;
+    }
+
+
+    .diya {
+
+        font-size: 27px;
+    }
+}
