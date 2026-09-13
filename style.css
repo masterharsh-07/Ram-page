@@ -1,6 +1,6 @@
-/* =====================================================
-   GLOBAL RESET
-===================================================== */
+/* =========================================
+   RESET
+========================================= */
 
 * {
     margin: 0;
@@ -8,844 +8,1215 @@
     box-sizing: border-box;
 }
 
-
 html,
 body {
     width: 100%;
     min-height: 100%;
 }
 
-
 body {
-
-    font-family:
-        "Noto Sans Devanagari",
-        Arial,
-        sans-serif;
-
-    overflow-x: hidden;
+    font-family: Georgia, "Times New Roman", serif;
 
     background:
-        linear-gradient(
-            135deg,
-            #7d1f0d,
-            #c94d16,
-            #f29a24,
-            #c94d16,
-            #7d1f0d
+        radial-gradient(
+            circle at top,
+            #ffd76a 0%,
+            #f6a623 35%,
+            #d96b00 100%
         );
 
-    color: #7b180b;
+    color: #5b2100;
+
+    overflow-x: hidden;
 }
 
 
-/* =====================================================
+/* =========================================
+   START SCREEN
+========================================= */
+
+.start-screen {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #ffe99a 0%,
+            #f7ae28 45%,
+            #d96b00 100%
+        );
+
+    transition:
+        opacity 0.8s ease,
+        visibility 0.8s ease;
+}
+
+
+/* Hide start screen */
+
+.start-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+
+/* Start content */
+
+.start-content {
+    padding: 30px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+/* Om */
+
+.start-om {
+    font-size: 65px;
+
+    color: #7a2600;
+
+    text-shadow:
+        0 3px 10px rgba(120, 40, 0, 0.3);
+
+    animation:
+        startGlow 2s ease-in-out infinite alternate;
+}
+
+
+/* Title */
+
+.start-content h1 {
+    margin-top: 5px;
+
+    font-size: clamp(35px, 9vw, 60px);
+
+    color: #702300;
+
+    letter-spacing: 2px;
+
+    text-shadow:
+        1px 2px 0 #ffd76b,
+        0 5px 12px rgba(100, 30, 0, 0.25);
+}
+
+
+/* Subtitle */
+
+.start-content p {
+    margin-top: 8px;
+
+    font-size: clamp(18px, 4vw, 25px);
+
+    color: #8a3000;
+
+    font-weight: bold;
+}
+
+
+/* Diya */
+
+.start-diya {
+    margin-top: 20px;
+
+    font-size: 55px;
+
+    filter:
+        drop-shadow(
+            0 0 12px rgba(255, 210, 60, 0.9)
+        );
+
+    animation:
+        diyaGlow 1.5s ease-in-out infinite alternate;
+}
+
+
+/* Start button */
+
+.start-button {
+    margin-top: 28px;
+
+    padding: 14px 28px;
+
+    border: 2px solid rgba(110, 40, 0, 0.4);
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #8d3000,
+            #652000
+        );
+
+    color: #ffe9a6;
+
+    font-family: inherit;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 7px 20px rgba(80, 25, 0, 0.35);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.start-button:hover {
+    transform: scale(1.05);
+
+    box-shadow:
+        0 10px 25px rgba(80, 25, 0, 0.4);
+}
+
+.start-button:active {
+    transform: scale(0.96);
+}
+
+
+/* Small text */
+
+.start-content small {
+    margin-top: 12px;
+
+    color: #7c2c00;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   START SCREEN ANIMATION
+========================================= */
+
+@keyframes startGlow {
+
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.08);
+    }
+}
+
+
+/* =========================================
    MAIN PAGE
-===================================================== */
+========================================= */
 
 .page {
-
     position: relative;
 
     min-height: 100vh;
 
     width: 100%;
 
-    overflow: hidden;
+    padding: 20px 15px 30px;
 
-    padding:
-        20px
-        30px
-        15px;
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    overflow: hidden;
 }
 
 
-/* =====================================================
+/* =========================================
    BACKGROUND GLOW
-===================================================== */
+========================================= */
 
 .background-glow {
-
     position: absolute;
 
-    width: 750px;
-    height: 750px;
+    width: 700px;
+    height: 700px;
 
+    top: -300px;
     left: 50%;
-    top: 42%;
 
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
+
+    background:
+        rgba(255, 245, 180, 0.35);
 
     border-radius: 50%;
 
-    background:
-        radial-gradient(
-            circle,
-            rgba(255, 247, 170, 0.98) 0%,
-            rgba(255, 220, 95, 0.85) 30%,
-            rgba(255, 179, 45, 0.45) 60%,
-            transparent 75%
-        );
-
-    z-index: 0;
+    filter: blur(50px);
 
     pointer-events: none;
 }
 
 
-/* =====================================================
-   DECORATIVE RINGS
-===================================================== */
+/* =========================================
+   RINGS
+========================================= */
 
 .ring {
-
     position: absolute;
-
-    border: 1px solid rgba(255, 239, 160, 0.35);
-
-    border-radius: 50%;
 
     left: 50%;
     top: 45%;
 
-    transform: translate(-50%, -50%);
+    transform:
+        translate(-50%, -50%);
+
+    border:
+        1px solid rgba(
+            255,
+            230,
+            130,
+            0.25
+        );
+
+    border-radius: 50%;
 
     pointer-events: none;
-
-    z-index: 0;
 }
-
 
 .ring-1 {
-
-    width: 900px;
-    height: 900px;
-}
-
-
-.ring-2 {
-
-    width: 700px;
-    height: 700px;
-}
-
-
-.ring-3 {
-
     width: 500px;
     height: 500px;
 }
 
+.ring-2 {
+    width: 750px;
+    height: 750px;
+}
 
-/* =====================================================
+.ring-3 {
+    width: 1000px;
+    height: 1000px;
+}
+
+
+/* =========================================
    HEADER
-===================================================== */
+========================================= */
 
 .header {
-
-    position: relative;
-
-    z-index: 10;
-
-    text-align: center;
-
-    height: 145px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-}
-
-
-.om {
-
-    font-size: 38px;
-
-    font-weight: 700;
-
-    line-height: 1;
-
-    color: #8b1e0d;
-
-    text-shadow:
-        2px 2px 3px rgba(255, 230, 100, 0.7);
-}
-
-
-.header h1 {
-
-    margin-top: 2px;
-
-    font-size: clamp(42px, 5vw, 70px);
-
-    font-weight: 800;
-
-    line-height: 1.1;
-
-    color: #791507;
-
-    text-shadow:
-        2px 3px 3px rgba(255, 218, 100, 0.75);
-}
-
-
-.jai-ram {
-
-    margin-top: 8px;
-
-    font-size: clamp(20px, 2vw, 28px);
-
-    font-weight: 700;
-
-    color: #8a210c;
-}
-
-
-/* =====================================================
-   PHOTO AREA
-===================================================== */
-
-.photo-area {
-
     position: relative;
 
     z-index: 5;
 
-    width: 100%;
+    text-align: center;
 
-    max-width: 1250px;
+    margin-bottom: 15px;
+}
 
-    margin: 0 auto;
+.om {
+    font-size: 40px;
 
-    display: flex;
+    color: #8b3000;
 
-    justify-content: center;
+    margin-bottom: 2px;
 
-    align-items: stretch;
+    text-shadow:
+        0 2px 4px rgba(
+            255,
+            240,
+            150,
+            0.7
+        );
+}
 
-    gap: 50px;
+.header h1 {
+    font-size:
+        clamp(30px, 6vw, 50px);
 
-    min-height: 530px;
+    color: #7a2600;
+
+    letter-spacing: 2px;
+
+    text-shadow:
+        1px 2px 0 #ffd66b,
+        0 4px 10px rgba(
+            120,
+            40,
+            0,
+            0.25
+        );
+}
+
+.header p {
+    margin-top: 5px;
+
+    font-size:
+        clamp(16px, 3vw, 22px);
+
+    color: #8d3500;
+
+    font-weight: bold;
 }
 
 
-/* =====================================================
-   PHOTO CARD
-===================================================== */
+/* =========================================
+   SLIDESHOW WRAPPER
+========================================= */
 
-.photo-card {
-
+.slideshow-wrapper {
     position: relative;
 
-    width: 46%;
+    z-index: 5;
 
-    max-width: 540px;
+    width:
+        min(92vw, 620px);
 
-    min-height: 520px;
+    margin-top: 5px;
+}
 
-    padding: 14px;
+
+/* =========================================
+   SLIDESHOW
+========================================= */
+
+.slideshow {
+    position: relative;
+
+    width: 100%;
+}
+
+
+/* =========================================
+   PHOTO CARD
+========================================= */
+
+.photo-card.slide {
+    display: none;
+
+    width: 100%;
+
+    padding: 15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 244, 200, 0.96),
+            rgba(255, 221, 137, 0.94)
+        );
+
+    border:
+        2px solid rgba(
+            133,
+            61,
+            0,
+            0.35
+        );
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 15px 35px rgba(
+            103,
+            38,
+            0,
+            0.28
+        ),
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.65);
+
+    animation:
+        slideAppear 0.45s ease;
+}
+
+.photo-card.slide.active {
+    display: block;
+}
+
+
+/* =========================================
+   SLIDE APPEAR
+========================================= */
+
+@keyframes slideAppear {
+
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* =========================================
+   CARD TITLE
+========================================= */
+
+.card-title {
+    text-align: center;
+
+    font-size:
+        clamp(20px, 4vw, 28px);
+
+    font-weight: bold;
+
+    color: #782500;
+
+    margin-bottom: 12px;
+
+    text-shadow:
+        0 1px 1px
+        rgba(255, 240, 160, 0.8);
+}
+
+
+/* =========================================
+   IMAGE BOX
+========================================= */
+
+.image-box {
+    width: 100%;
+
+    height:
+        min(65vh, 500px);
+
+    min-height: 280px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        rgba(110, 45, 0, 0.08);
 
     border-radius: 18px;
 
-    background:
-        rgba(255, 248, 205, 0.18);
-
-    border:
-        2px solid rgba(255, 226, 112, 0.75);
-
-    box-shadow:
-
-        0 10px 35px
-        rgba(75, 20, 0, 0.35),
-
-        inset 0 0 30px
-        rgba(255, 220, 90, 0.18);
-
-    backdrop-filter: blur(3px);
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-}
-
-
-/* =====================================================
-   CARD TITLES
-===================================================== */
-
-.card-title {
-
-    position: relative;
-
-    z-index: 5;
-
-    width: 100%;
-
-    text-align: center;
-
-    font-size: 27px;
-
-    font-weight: 800;
-
-    color: #7b180b;
-
-    margin-bottom: 10px;
-
-    text-shadow:
-        1px 2px 2px
-        rgba(255, 220, 100, 0.8);
-}
-
-
-/* =====================================================
-   IMAGE BOX
-===================================================== */
-
-.image-box {
-
-    position: relative;
-
-    width: 100%;
-
-    height: 455px;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
     overflow: hidden;
 
-    border-radius: 12px;
-
-    background:
-        rgba(255, 245, 190, 0.12);
+    border:
+        1px solid rgba(
+            120,
+            50,
+            0,
+            0.2
+        );
 }
 
-
-/* =====================================================
-   COMMON IMAGE
-===================================================== */
-
 .image-box img {
-
-    display: block;
-
     width: 100%;
-
     height: 100%;
 
     object-fit: contain;
 
-    object-position: center;
+    display: block;
 
-    border-radius: 10px;
+    border-radius: 14px;
+}
 
-    filter:
-        drop-shadow(
-            0 8px 12px
-            rgba(80, 25, 0, 0.35)
+
+/* =========================================
+   RAM + GANAPATI COLLAGE
+========================================= */
+
+.ram-ganapati-collage {
+    width: 100%;
+
+    height:
+        min(65vh, 500px);
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+
+    padding: 6px;
+
+    background:
+        rgba(110, 45, 0, 0.07);
+
+    border-radius: 18px;
+
+    border:
+        1px solid rgba(
+            120,
+            50,
+            0,
+            0.15
+        );
+}
+
+
+/* =========================================
+   COLLAGE PHOTO
+========================================= */
+
+.collage-photo {
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    border-radius: 14px;
+
+    background: #f4c66a;
+
+    border:
+        2px solid rgba(
+            110,
+            42,
+            0,
+            0.22
         );
 
-    transition:
-        transform 0.4s ease;
+    box-shadow:
+        0 5px 14px rgba(
+            80,
+            30,
+            0,
+            0.25
+        );
+}
+
+.collage-photo img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 12px;
 }
 
 
-/* =====================================================
-   RAM IMAGE
-===================================================== */
+/* =========================================
+   SLIDE BUTTONS
+========================================= */
 
-.ram-image {
-
-    object-fit: contain !important;
-
-    object-position: center center !important;
-}
-
-
-.ram-card:hover .ram-image {
-
-    transform: scale(1.025);
-}
-
-
-/* =====================================================
-   GANAPATI IMAGE
-===================================================== */
-
-.ganapati-image {
-
-    object-fit: contain !important;
-
-    object-position: center center !important;
-}
-
-
-.ganapati-card:hover .ganapati-image {
-
-    transform: scale(1.025);
-}
-
-
-/* =====================================================
-   DIYAS
-===================================================== */
-
-.diya {
-
+.slide-button {
     position: absolute;
 
-    z-index: 20;
+    top: 50%;
 
-    font-size: 42px;
+    transform:
+        translateY(-50%);
+
+    width: 45px;
+    height: 45px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        rgba(106, 38, 0, 0.78);
+
+    color: #ffe9a6;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    z-index: 10;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.slide-button:hover {
+    background:
+        rgba(83, 26, 0, 0.95);
+
+    transform:
+        translateY(-50%)
+        scale(1.08);
+}
+
+.slide-button:active {
+    transform:
+        translateY(-50%)
+        scale(0.95);
+}
+
+.slide-button.prev {
+    left: -22px;
+}
+
+.slide-button.next {
+    right: -22px;
+}
+
+
+/* =========================================
+   DOTS
+========================================= */
+
+.slide-dots {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 14px;
+}
+
+.dot {
+    width: 9px;
+    height: 9px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        rgba(101, 38, 0, 0.35);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.dot.active {
+    background: #702300;
+
+    transform: scale(1.45);
+}
+
+
+/* =========================================
+   DIYAS
+========================================= */
+
+.diyas {
+    position: relative;
+
+    z-index: 5;
+
+    width:
+        min(90vw, 500px);
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 18px;
+}
+
+.diya {
+    font-size: 38px;
 
     filter:
         drop-shadow(
             0 0 8px
-            rgba(255, 190, 40, 0.8)
+            rgba(255, 210, 70, 0.8)
         );
 
     animation:
-        diya-glow 2s ease-in-out infinite;
+        diyaGlow 1.8s
+        ease-in-out
+        infinite alternate;
 }
 
+@keyframes diyaGlow {
 
-.diya-left {
-
-    left: 4%;
-
-    top: 78%;
-}
-
-
-.diya-right {
-
-    right: 4%;
-
-    top: 78%;
-}
-
-
-@keyframes diya-glow {
-
-    0%,
-    100% {
-
+    from {
         transform: scale(1);
-
-        filter:
-            drop-shadow(
-                0 0 5px
-                rgba(255, 180, 20, 0.6)
-            );
     }
 
-    50% {
-
+    to {
         transform: scale(1.08);
-
-        filter:
-            drop-shadow(
-                0 0 18px
-                rgba(255, 210, 70, 1)
-            );
     }
 }
 
 
-/* =====================================================
-   BOTTOM MESSAGE
-===================================================== */
+/* =========================================
+   MESSAGE
+========================================= */
 
 .message {
-
     position: relative;
 
-    z-index: 10;
+    z-index: 5;
 
     text-align: center;
 
     margin-top: 12px;
 }
 
-
 .message h2 {
+    font-size: 27px;
 
-    font-size: 36px;
-
-    font-weight: 800;
-
-    color: #7b180b;
-
-    text-shadow:
-        1px 2px 2px
-        rgba(255, 220, 100, 0.7);
+    color: #722400;
 }
-
 
 .message p {
+    margin-top: 5px;
 
-    margin-top: 2px;
+    font-size: 16px;
 
-    font-size: 19px;
+    color: #8b3a00;
 
-    font-weight: 600;
-
-    color: #8b270e;
+    font-weight: bold;
 }
 
-
 .stars {
-
-    margin-top: 3px;
+    margin-top: 7px;
 
     font-size: 20px;
 
-    color: #8c300e;
+    color: #8a3500;
+
+    letter-spacing: 8px;
 }
 
 
-/* =====================================================
+/* =========================================
    FOOTER
-===================================================== */
+========================================= */
 
 .footer {
-
     position: relative;
 
-    z-index: 10;
+    z-index: 5;
 
-    text-align: center;
+    margin-top: 14px;
 
-    margin-top: 8px;
+    font-size: 16px;
 
-    font-size: 18px;
+    color: #7d2b00;
 
-    font-weight: 700;
-
-    color: #7b180b;
+    font-weight: bold;
 }
 
 
-/* =====================================================
-   PETAL CONTAINER
-===================================================== */
+/* =========================================
+   ROSE PETALS
+========================================= */
 
 #petal-container {
-
     position: fixed;
 
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
+    inset: 0;
 
     pointer-events: none;
 
     overflow: hidden;
 
-    z-index: 50;
+    z-index: 20;
 }
 
-
-/* =====================================================
-   ROSE PETALS
-===================================================== */
-
 .petal {
-
     position: absolute;
 
-    top: -40px;
+    top: -50px;
 
-    width: 17px;
-
-    height: 11px;
+    width: 16px;
+    height: 24px;
 
     border-radius:
-        70% 30% 70% 30%;
+        70% 30% 65% 35%;
 
     background:
-        linear-gradient(
-            135deg,
-            #ff4d5a,
-            #d4142c,
-            #a5081d
+        radial-gradient(
+            ellipse at 35% 25%,
+            rgba(255, 190, 205, 0.95) 0%,
+            rgba(235, 70, 100, 0.95) 35%,
+            rgba(175, 25, 55, 0.95) 75%,
+            rgba(120, 10, 35, 0.90) 100%
         );
 
     box-shadow:
+        inset 2px 2px 4px
+        rgba(255, 220, 225, 0.45),
+
+        inset -2px -3px 5px
+        rgba(100, 0, 25, 0.25),
+
         0 2px 5px
-        rgba(90, 0, 10, 0.3);
+        rgba(100, 0, 20, 0.25);
 
     opacity: 0.9;
 
+    transform-origin: 50% 30%;
+
     animation:
-        petal-fall linear forwards;
+        rosePetalFall
+        linear
+        forwards;
 }
 
 
-@keyframes petal-fall {
+/* Petal fold */
+
+.petal::after {
+    content: "";
+
+    position: absolute;
+
+    width: 45%;
+    height: 70%;
+
+    left: 28%;
+    top: 10%;
+
+    border-left:
+        1px solid
+        rgba(255, 210, 220, 0.35);
+
+    border-radius: 50%;
+
+    transform: rotate(15deg);
+}
+
+
+/* Petal animation */
+
+@keyframes rosePetalFall {
 
     0% {
 
-        transform:
-            translateY(-40px)
-            translateX(0)
-            rotate(0deg);
+        top: -50px;
 
         opacity: 0;
+
+        transform:
+            translateX(0)
+            rotate(0deg)
+            rotateY(0deg)
+            scale(0.8);
     }
 
     10% {
+        opacity: 0.9;
+    }
 
-        opacity: 0.95;
+    25% {
+
+        transform:
+            translateX(35px)
+            rotate(90deg)
+            rotateY(80deg)
+            scale(1);
     }
 
     50% {
 
         transform:
-            translateY(50vh)
-            translateX(80px)
-            rotate(180deg);
+            translateX(-30px)
+            rotate(200deg)
+            rotateY(160deg)
+            scale(0.9);
+    }
+
+    75% {
+
+        transform:
+            translateX(45px)
+            rotate(290deg)
+            rotateY(250deg)
+            scale(1.05);
     }
 
     100% {
 
-        transform:
-            translateY(110vh)
-            translateX(-80px)
-            rotate(360deg);
+        top: 110vh;
 
-        opacity: 0.2;
+        opacity: 0;
+
+        transform:
+            translateX(-35px)
+            rotate(420deg)
+            rotateY(360deg)
+            scale(0.85);
     }
 }
 
 
-/* =====================================================
+/* =========================================
    TABLET
-===================================================== */
+========================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 800px) {
 
-    .page {
-
-        padding:
-            15px
-            18px
-            12px;
+    .slideshow-wrapper {
+        width:
+            min(94vw, 620px);
     }
-
-
-    .header {
-
-        height: 125px;
-    }
-
-
-    .photo-area {
-
-        gap: 20px;
-
-        min-height: 450px;
-    }
-
-
-    .photo-card {
-
-        width: 48%;
-
-        min-height: 440px;
-
-        padding: 10px;
-    }
-
 
     .image-box {
-
-        height: 375px;
+        height:
+            min(65vh, 500px);
     }
 
-
-    .card-title {
-
-        font-size: 23px;
-    }
-
-
-    .message h2 {
-
-        font-size: 30px;
+    .ram-ganapati-collage {
+        height:
+            min(65vh, 500px);
     }
 }
 
 
-/* =====================================================
+/* =========================================
    MOBILE
-===================================================== */
+========================================= */
 
 @media (max-width: 650px) {
 
-    body {
-
-        overflow-x: hidden;
-    }
-
-
     .page {
-
         padding:
-            10px
-            10px
-            15px;
+            12px 8px 25px;
     }
-
 
     .header {
-
-        height: 120px;
+        margin-bottom: 8px;
     }
-
 
     .om {
-
-        font-size: 28px;
-    }
-
-
-    .header h1 {
-
-        font-size: 39px;
-    }
-
-
-    .jai-ram {
-
-        font-size: 18px;
-
-        margin-top: 5px;
-    }
-
-
-    /* Stack photos vertically */
-
-    .photo-area {
-
-        flex-direction: column;
-
-        align-items: center;
-
-        gap: 25px;
-
-        min-height: auto;
-    }
-
-
-    .photo-card {
-
-        width: 95%;
-
-        max-width: 450px;
-
-        min-height: auto;
-    }
-
-
-    .image-box {
-
-        height: 430px;
-    }
-
-
-    .card-title {
-
-        font-size: 24px;
-    }
-
-
-    .diya {
-
         font-size: 32px;
     }
 
+    .header h1 {
+        font-size: 30px;
+    }
 
-    .diya-left {
+    .header p {
+        font-size: 16px;
+    }
 
-        left: 2%;
+    .slideshow-wrapper {
+        width: 96vw;
 
-        top: 45%;
+        margin-top: 2px;
+    }
+
+    .photo-card.slide {
+        padding: 8px;
+
+        border-radius: 20px;
+    }
+
+    .card-title {
+        font-size: 21px;
+
+        margin-bottom: 8px;
+    }
+
+    .image-box {
+
+        width: 100%;
+
+        height: 68vh;
+
+        min-height: 380px;
+
+        border-radius: 15px;
+    }
+
+    .image-box img {
+        width: 100%;
+        height: 100%;
+
+        object-fit: contain;
+
+        border-radius: 12px;
     }
 
 
-    .diya-right {
+    /* Mobile collage */
 
-        right: 2%;
+    .ram-ganapati-collage {
 
-        top: 45%;
+        width: 100%;
+
+        height: 68vh;
+
+        min-height: 380px;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 6px;
+
+        padding: 5px;
+
+        border-radius: 14px;
+    }
+
+    .collage-photo {
+        border-radius: 10px;
+    }
+
+    .collage-photo img {
+        border-radius: 8px;
+
+        object-fit: cover;
     }
 
 
-    .message {
+    /* Mobile arrows */
 
-        margin-top: 25px;
+    .slide-button {
+
+        width: 38px;
+        height: 38px;
+
+        font-size: 18px;
     }
 
+    .slide-button.prev {
+        left: -5px;
+    }
+
+    .slide-button.next {
+        right: -5px;
+    }
+
+
+    /* Mobile diyas */
+
+    .diyas {
+        margin-top: 12px;
+    }
+
+    .diya {
+        font-size: 30px;
+    }
+
+
+    /* Mobile message */
 
     .message h2 {
-
-        font-size: 29px;
+        font-size: 24px;
     }
-
 
     .message p {
-
-        font-size: 16px;
+        font-size: 14px;
     }
 
 
-    .footer {
+    /* Start screen */
 
+    .start-om {
+        font-size: 50px;
+    }
+
+    .start-button {
         font-size: 16px;
 
-        margin-top: 7px;
+        padding:
+            13px 23px;
     }
 }
 
 
-/* =====================================================
+/* =========================================
    SMALL MOBILE
-===================================================== */
+========================================= */
 
 @media (max-width: 400px) {
 
-    .header h1 {
-
-        font-size: 32px;
+    .page {
+        padding-left: 5px;
+        padding-right: 5px;
     }
 
+    .slideshow-wrapper {
+        width: 97vw;
+    }
+
+    .photo-card.slide {
+        padding: 7px;
+
+        border-radius: 18px;
+    }
 
     .image-box {
 
-        height: 360px;
+        height: 70vh;
+
+        min-height: 360px;
     }
 
+    .ram-ganapati-collage {
 
-    .photo-card {
+        height: 70vh;
 
-        width: 96%;
+        min-height: 360px;
+
+        gap: 5px;
     }
 
+    .slide-button {
 
-    .diya {
+        width: 34px;
+        height: 34px;
 
-        font-size: 27px;
+        font-size: 16px;
+    }
+}
+
+
+/* =========================================
+   VERY SMALL MOBILE
+========================================= */
+
+@media (max-width: 350px) {
+
+    .slideshow-wrapper {
+        width: 98vw;
+    }
+
+    .photo-card.slide {
+        padding: 6px;
+    }
+
+    .image-box {
+
+        height: 68vh;
+
+        min-height: 330px;
+    }
+
+    .ram-ganapati-collage {
+
+        height: 68vh;
+
+        min-height: 330px;
+    }
+
+    .card-title {
+        font-size: 19px;
     }
 }
