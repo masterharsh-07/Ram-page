@@ -1,115 +1,90 @@
-/* =========================================
-   WELCOME SCREEN + MUSIC
-========================================= */
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
-const startScreen =
-    document.getElementById("startScreen");
+const startScreen = document.getElementById("startScreen");
+const startButton = document.getElementById("startButton");
+const bgMusic = document.getElementById("bgMusic");
 
-const startButton =
-    document.getElementById("startButton");
+const slides = Array.from(
+    document.querySelectorAll(".slide")
+);
 
-const bgMusic =
-    document.getElementById("bgMusic");
+const slideshow = document.getElementById("slideshow");
 
-
-if (startButton && bgMusic) {
-
-    startButton.addEventListener(
-        "click",
-        async function () {
-
-            try {
-
-                bgMusic.volume = 1.0;
-
-                await bgMusic.play();
-
-                console.log(
-                    "Background music started."
-                );
-
-            } catch (error) {
-
-                console.error(
-                    "Music could not start:",
-                    error
-                );
-
-            }
-
-
-            if (startScreen) {
-
-                startScreen.classList.add(
-                    "hidden"
-                );
-
-            }
-
-        }
-    );
-
-}
-
-
-
-/* =========================================
-   SLIDESHOW ELEMENTS
-========================================= */
-
-const slides =
-    document.querySelectorAll(".slide");
-
-const slideshow =
-    document.getElementById("slideshow");
-
-const prevBtn =
-    document.getElementById("prevBtn");
-
-const nextBtn =
-    document.getElementById("nextBtn");
-
-const slideDots =
-    document.getElementById("slideDots");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const slideDots = document.getElementById("slideDots");
 
 const devotionalVideo =
-    document.getElementById(
-        "devotionalVideo"
-    );
+    document.getElementById("devotionalVideo");
 
+const petalContainer =
+    document.getElementById("petal-container");
+
+
+/* =====================================================
+   CHECK SLIDES
+===================================================== */
+
+console.log("Total slides:", slides.length);
+
+
+/*
+   Automatically find the video slide.
+
+   This is better than using:
+   const VIDEO_SLIDE = 5;
+
+   because your page currently appears to have
+   more than 7 slides.
+*/
+
+const VIDEO_SLIDE =
+    slides.findIndex(function (slide) {
+        return slide.classList.contains("video-slide");
+    });
+
+
+/*
+   Final slide is always the last slide.
+*/
+
+const FINAL_SLIDE =
+    slides.length - 1;
+
+
+console.log(
+    "Video slide index:",
+    VIDEO_SLIDE
+);
+
+console.log(
+    "Final slide index:",
+    FINAL_SLIDE
+);
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
 
 let currentSlide = 0;
 
 let autoSlideTimer = null;
 
+let slideshowStarted = false;
 
 
-/* =========================================
-   IMPORTANT SLIDE NUMBERS
-========================================= */
-
-/*
-   Slide 0 = Ram
-   Slide 1 = Ganapati
-   Slide 2 = 1.jpeg
-   Slide 3 = 2.jpeg
-   Slide 4 = 3.jpeg
-   Slide 5 = Video
-   Slide 6 = Final collage
-*/
-
-const VIDEO_SLIDE = 5;
-
-const FINAL_SLIDE = 6;
-
-
-
-/* =========================================
+/* =====================================================
    CREATE DOTS
-========================================= */
+===================================================== */
 
-slides.forEach(
-    function (slide, index) {
+if (slideDots) {
+
+    slideDots.innerHTML = "";
+
+    slides.forEach(function (slide, index) {
 
         const dot =
             document.createElement("button");
@@ -118,7 +93,7 @@ slides.forEach(
 
         dot.setAttribute(
             "aria-label",
-            `Go to slide ${index + 1}`
+            "Go to slide " + (index + 1)
         );
 
 
@@ -133,6 +108,10 @@ slides.forEach(
             "click",
             function () {
 
+                if (!slideshowStarted) {
+                    return;
+                }
+
                 goToSlide(index);
 
             }
@@ -141,48 +120,60 @@ slides.forEach(
 
         slideDots.appendChild(dot);
 
-    }
-);
+    });
+
+}
 
 
+/* =====================================================
+   UPDATE DOTS
+===================================================== */
 
-/* =========================================
-   SHOW SLIDE
-========================================= */
-
-function showSlide(index) {
-
-    slides.forEach(
-        function (slide, i) {
-
-            slide.classList.toggle(
-                "active",
-                i === index
-            );
-
-        }
-    );
-
+function updateDots() {
 
     const dots =
         document.querySelectorAll(".dot");
 
 
-    dots.forEach(
-        function (dot, i) {
+    dots.forEach(function (dot, index) {
 
-            dot.classList.toggle(
-                "active",
-                i === index
-            );
+        dot.classList.toggle(
+            "active",
+            index === currentSlide
+        );
+
+    });
+
+}
+
+
+/* =====================================================
+   SHOW SLIDE
+===================================================== */
+
+function showSlide(index) {
+
+    slides.forEach(function (slide, i) {
+
+        if (i === index) {
+
+            slide.classList.add("active");
+
+        } else {
+
+            slide.classList.remove("active");
 
         }
-    );
+
+    });
+
+
+    updateDots();
 
 
     /*
-       Stop video when we leave
-       the video slide.
+       If leaving video slide,
+       stop the video.
     */
 
     if (
@@ -197,12 +188,112 @@ function showSlide(index) {
 }
 
 
+/* =====================================================
+   START VIDEO
+===================================================== */
 
-/* =========================================
+function startVideo() {
+
+    if (!devotionalVideo) {
+
+        console.error(
+            "ERROR: #devotionalVideo was not found."
+        );
+
+        return;
+
+    }
+
+
+    console.log(
+        "Starting video automatically..."
+    );
+
+
+    /*
+       Make sure video is muted.
+
+       Muted autoplay is allowed much more
+       reliably on mobile browsers.
+    */
+
+    devotionalVideo.muted = true;
+
+    devotionalVideo.setAttribute(
+        "muted",
+        ""
+    );
+
+    devotionalVideo.playsInline = true;
+
+    devotionalVideo.setAttribute(
+        "playsinline",
+        ""
+    );
+
+
+    /*
+       Start from beginning.
+    */
+
+    try {
+
+        devotionalVideo.currentTime = 0;
+
+    } catch (error) {
+
+        console.log(
+            "Could not reset video:",
+            error
+        );
+
+    }
+
+
+    /*
+       Play video.
+    */
+
+    const playPromise =
+        devotionalVideo.play();
+
+
+    if (playPromise !== undefined) {
+
+        playPromise.then(function () {
+
+            console.log(
+                "✓ Video started automatically."
+            );
+
+        }).catch(function (error) {
+
+            console.error(
+                "✗ Video autoplay failed:",
+                error
+            );
+
+        });
+
+    }
+
+}
+
+
+/* =====================================================
    GO TO SLIDE
-========================================= */
+===================================================== */
 
 function goToSlide(index) {
+
+    if (!slideshowStarted) {
+        return;
+    }
+
+
+    /*
+       Prevent invalid slide number.
+    */
 
     if (
         index < 0 ||
@@ -215,108 +306,102 @@ function goToSlide(index) {
 
 
     /*
-       Stop current timer first.
+       Stop current timer.
     */
 
-    clearInterval(
-        autoSlideTimer
-    );
+    clearInterval(autoSlideTimer);
 
+
+    /*
+       Change current slide.
+    */
 
     currentSlide = index;
 
 
+    /*
+       Display slide.
+    */
+
     showSlide(currentSlide);
 
 
-
-    /* =====================================
+    /* =================================================
        VIDEO SLIDE
-    ====================================== */
+    ================================================= */
 
     if (
+        VIDEO_SLIDE !== -1 &&
         currentSlide === VIDEO_SLIDE
     ) {
 
-        /*
-           Start video from beginning.
-        */
-
-        if (devotionalVideo) {
-
-            devotionalVideo.currentTime = 0;
+        console.log(
+            "✓ Reached video slide."
+        );
 
 
-            /*
-               Try autoplay.
-               Browser may block it.
-            */
-
-            devotionalVideo.play().catch(
-                function () {
-
-                    console.log(
-                        "Video autoplay blocked. Press play."
-                    );
-
-                }
-            );
-
-        }
+        clearInterval(autoSlideTimer);
 
 
         /*
-           VERY IMPORTANT:
-           No 5-second timer here.
+           Small delay allows the slide to become
+           visible before attempting playback.
         */
+
+        setTimeout(function () {
+
+            startVideo();
+
+        }, 100);
+
 
         return;
 
     }
 
 
-
-    /* =====================================
-       FINAL COLLAGE
-    ====================================== */
+    /* =================================================
+       FINAL SLIDE
+    ================================================= */
 
     if (
         currentSlide === FINAL_SLIDE
     ) {
 
-        /*
-           Stop everything.
-        */
-
-        clearInterval(
-            autoSlideTimer
+        console.log(
+            "✓ Reached final slide."
         );
+
+
+        clearInterval(autoSlideTimer);
 
         return;
 
     }
 
 
-
-    /* =====================================
-       NORMAL IMAGE SLIDES
-    ====================================== */
+    /* =================================================
+       NORMAL IMAGE SLIDE
+    ================================================= */
 
     startAutoSlide();
 
 }
 
 
-
-/* =========================================
+/* =====================================================
    NEXT SLIDE
-========================================= */
+===================================================== */
 
 function nextSlide() {
 
+    if (!slideshowStarted) {
+        return;
+    }
+
+
     if (
-        currentSlide <
-        FINAL_SLIDE
+        currentSlide < FINAL_SLIDE
     ) {
 
         goToSlide(
@@ -328,14 +413,20 @@ function nextSlide() {
 }
 
 
-
-/* =========================================
+/* =====================================================
    PREVIOUS SLIDE
-========================================= */
+===================================================== */
 
 function previousSlide() {
 
-    if (currentSlide > 0) {
+    if (!slideshowStarted) {
+        return;
+    }
+
+
+    if (
+        currentSlide > 0
+    ) {
 
         goToSlide(
             currentSlide - 1
@@ -346,10 +437,9 @@ function previousSlide() {
 }
 
 
-
-/* =========================================
+/* =====================================================
    NEXT BUTTON
-========================================= */
+===================================================== */
 
 if (nextBtn) {
 
@@ -365,10 +455,9 @@ if (nextBtn) {
 }
 
 
-
-/* =========================================
+/* =====================================================
    PREVIOUS BUTTON
-========================================= */
+===================================================== */
 
 if (prevBtn) {
 
@@ -384,24 +473,34 @@ if (prevBtn) {
 }
 
 
-
-/* =========================================
-   5 SECOND IMAGE SLIDESHOW
-========================================= */
+/* =====================================================
+   AUTOMATIC SLIDESHOW
+===================================================== */
 
 function startAutoSlide() {
 
-    clearInterval(
-        autoSlideTimer
-    );
+    /*
+       Clear old timer.
+    */
+
+    clearInterval(autoSlideTimer);
 
 
     /*
-       Do not start timer on video
-       or final collage.
+       Don't start before Darshan button.
+    */
+
+    if (!slideshowStarted) {
+        return;
+    }
+
+
+    /*
+       Don't start timer on video.
     */
 
     if (
+        VIDEO_SLIDE !== -1 &&
         currentSlide >= VIDEO_SLIDE
     ) {
 
@@ -410,97 +509,296 @@ function startAutoSlide() {
     }
 
 
-    autoSlideTimer =
-        setInterval(
-            function () {
+    /*
+       Don't start timer on final slide.
+    */
+
+    if (
+        currentSlide >= FINAL_SLIDE
+    ) {
+
+        return;
+
+    }
+
+
+    console.log(
+        "Automatic slideshow started."
+    );
+
+
+    /*
+       Change every 5 seconds.
+    */
+
+    autoSlideTimer = setInterval(
+        function () {
+
+            /*
+               If final slide reached,
+               stop everything.
+            */
+
+            if (
+                currentSlide >= FINAL_SLIDE
+            ) {
+
+                clearInterval(
+                    autoSlideTimer
+                );
+
+                return;
+
+            }
+
+
+            /*
+               Move to next slide.
+            */
+
+            currentSlide++;
+
+
+            console.log(
+                "Changing to slide:",
+                currentSlide + 1
+            );
+
+
+            showSlide(
+                currentSlide
+            );
+
+
+            /* =========================================
+               VIDEO REACHED
+            ========================================== */
+
+            if (
+                VIDEO_SLIDE !== -1 &&
+                currentSlide === VIDEO_SLIDE
+            ) {
+
+                console.log(
+                    "✓ Video slide reached automatically."
+                );
+
+
+                clearInterval(
+                    autoSlideTimer
+                );
+
 
                 /*
-                   If we reach the image
-                   before video, go to video.
+                   Give browser a moment to display
+                   the video slide.
                 */
 
-                if (
-                    currentSlide <
-                    VIDEO_SLIDE
-                ) {
+                setTimeout(function () {
 
-                    currentSlide++;
+                    startVideo();
 
-                    showSlide(
-                        currentSlide
-                    );
+                }, 100);
 
 
-                    /*
-                       If video has appeared,
-                       stop the timer.
-                    */
+                return;
 
-                    if (
-                        currentSlide ===
-                        VIDEO_SLIDE
-                    ) {
-
-                        clearInterval(
-                            autoSlideTimer
-                        );
+            }
 
 
-                        /*
-                           Start video.
-                        */
+            /* =========================================
+               FINAL SLIDE
+            ========================================== */
 
-                        if (
-                            devotionalVideo
-                        ) {
+            if (
+                currentSlide === FINAL_SLIDE
+            ) {
 
-                            devotionalVideo
-                                .currentTime = 0;
+                clearInterval(
+                    autoSlideTimer
+                );
 
-                            devotionalVideo
-                                .play()
-                                .catch(
-                                    function () {
+                return;
 
-                                        console.log(
-                                            "Press play to start video."
-                                        );
+            }
 
-                                    }
-                                );
-
-                        }
-
-                    }
-
-                }
-
-            },
-            5000
-        );
+        },
+        5000
+    );
 
 }
 
 
+/* =====================================================
+   DARSHAN BUTTON
+===================================================== */
 
-/* =========================================
-   VIDEO ENDED
-========================================= */
+if (startButton) {
+
+    startButton.addEventListener(
+        "click",
+        async function () {
+
+            /*
+               Prevent multiple clicks.
+            */
+
+            if (slideshowStarted) {
+                return;
+            }
+
+
+            slideshowStarted = true;
+
+
+            console.log(
+                "✓ Darshan started."
+            );
+
+
+            /* =========================================
+               START BACKGROUND MUSIC
+            ========================================== */
+
+            if (bgMusic) {
+
+                try {
+
+                    bgMusic.volume = 1.0;
+
+                    await bgMusic.play();
+
+
+                    console.log(
+                        "✓ Background music started."
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.log(
+                        "Background music could not start:",
+                        error
+                    );
+
+                }
+
+            }
+
+
+            /* =========================================
+               HIDE START SCREEN
+            ========================================== */
+
+            if (startScreen) {
+
+                startScreen.classList.add(
+                    "hidden"
+                );
+
+            }
+
+
+            /* =========================================
+               START FROM FIRST SLIDE
+            ========================================== */
+
+            currentSlide = 0;
+
+
+            showSlide(
+                currentSlide
+            );
+
+
+            /*
+               Start 5-second slideshow.
+            */
+
+            startAutoSlide();
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   VIDEO EVENTS
+===================================================== */
 
 if (devotionalVideo) {
+
+
+    /*
+       Video loaded.
+    */
+
+    devotionalVideo.addEventListener(
+        "loadeddata",
+        function () {
+
+            console.log(
+                "✓ video.mp4 loaded successfully."
+            );
+
+        }
+    );
+
+
+    /*
+       Video started playing.
+    */
+
+    devotionalVideo.addEventListener(
+        "playing",
+        function () {
+
+            console.log(
+                "✓ Video is playing."
+            );
+
+        }
+    );
+
+
+    /*
+       Video failed.
+    */
+
+    devotionalVideo.addEventListener(
+        "error",
+        function () {
+
+            console.error(
+                "✗ Could not load video.mp4."
+            );
+
+        }
+    );
+
+
+    /*
+       Video ended.
+    */
 
     devotionalVideo.addEventListener(
         "ended",
         function () {
 
             console.log(
-                "Video finished."
+                "✓ Video finished."
+            );
+
+
+            clearInterval(
+                autoSlideTimer
             );
 
 
             /*
-               Go to final collage
-               after complete video.
+               Go directly to final collage.
             */
 
             currentSlide =
@@ -513,8 +811,7 @@ if (devotionalVideo) {
 
 
             /*
-               Make sure slideshow
-               stays stopped.
+               Keep final slide displayed.
             */
 
             clearInterval(
@@ -527,62 +824,9 @@ if (devotionalVideo) {
 }
 
 
-
-/* =========================================
-   VIDEO PLAY
-========================================= */
-
-if (devotionalVideo) {
-
-    devotionalVideo.addEventListener(
-        "play",
-        function () {
-
-            /*
-               Never allow the 5-second
-               timer to interfere with video.
-            */
-
-            clearInterval(
-                autoSlideTimer
-            );
-
-        }
-    );
-
-}
-
-
-
-/* =========================================
-   VIDEO PAUSE
-========================================= */
-
-if (devotionalVideo) {
-
-    devotionalVideo.addEventListener(
-        "pause",
-        function () {
-
-            /*
-               Keep slideshow stopped
-               while video is paused.
-            */
-
-            clearInterval(
-                autoSlideTimer
-            );
-
-        }
-    );
-
-}
-
-
-
-/* =========================================
-   TOUCH / SWIPE
-========================================= */
+/* =====================================================
+   SWIPE SUPPORT
+===================================================== */
 
 let touchStartX = 0;
 
@@ -591,13 +835,18 @@ let touchEndX = 0;
 
 if (slideshow) {
 
+
     slideshow.addEventListener(
         "touchstart",
         function (event) {
 
+            if (!slideshowStarted) {
+                return;
+            }
+
+
             touchStartX =
-                event.changedTouches[0]
-                    .screenX;
+                event.changedTouches[0].screenX;
 
         },
         {
@@ -610,11 +859,39 @@ if (slideshow) {
         "touchend",
         function (event) {
 
-            touchEndX =
-                event.changedTouches[0]
-                    .screenX;
+            if (!slideshowStarted) {
+                return;
+            }
 
-            handleSwipe();
+
+            touchEndX =
+                event.changedTouches[0].screenX;
+
+
+            const distance =
+                touchEndX - touchStartX;
+
+
+            /*
+               Swipe left = next.
+            */
+
+            if (distance < -50) {
+
+                nextSlide();
+
+            }
+
+
+            /*
+               Swipe right = previous.
+            */
+
+            else if (distance > 50) {
+
+                previousSlide();
+
+            }
 
         },
         {
@@ -625,41 +902,18 @@ if (slideshow) {
 }
 
 
-
-/* =========================================
-   HANDLE SWIPE
-========================================= */
-
-function handleSwipe() {
-
-    const swipeDistance =
-        touchEndX - touchStartX;
-
-
-    if (swipeDistance < -50) {
-
-        nextSlide();
-
-    }
-
-
-    else if (swipeDistance > 50) {
-
-        previousSlide();
-
-    }
-
-}
-
-
-
-/* =========================================
-   KEYBOARD ARROWS
-========================================= */
+/* =====================================================
+   KEYBOARD CONTROLS
+===================================================== */
 
 document.addEventListener(
     "keydown",
     function (event) {
+
+        if (!slideshowStarted) {
+            return;
+        }
+
 
         if (
             event.key === "ArrowRight"
@@ -670,7 +924,7 @@ document.addEventListener(
         }
 
 
-        else if (
+        if (
             event.key === "ArrowLeft"
         ) {
 
@@ -682,33 +936,36 @@ document.addEventListener(
 );
 
 
+/* =====================================================
+   INITIAL STATE
+===================================================== */
 
-/* =========================================
-   INITIALIZE
-========================================= */
+if (slides.length > 0) {
 
-showSlide(0);
+    currentSlide = 0;
 
-startAutoSlide();
+    showSlide(0);
+
+}
 
 
+/*
+   IMPORTANT:
+   Do NOT call startAutoSlide() here.
 
-/* =========================================
+   Slideshow starts only after:
+   "दर्शनासाठी स्पर्श करा"
+*/
+
+
+/* =====================================================
    ROSE PETALS
-========================================= */
-
-const petalContainer =
-    document.getElementById(
-        "petal-container"
-    );
-
+===================================================== */
 
 function createPetal() {
 
     if (!petalContainer) {
-
         return;
-
     }
 
 
@@ -716,11 +973,13 @@ function createPetal() {
         document.createElement("div");
 
 
-    petal.classList.add("petal");
+    petal.classList.add(
+        "petal"
+    );
 
 
     /*
-       Random position
+       Random position.
     */
 
     petal.style.left =
@@ -728,7 +987,7 @@ function createPetal() {
 
 
     /*
-       Random size
+       Random size.
     */
 
     const size =
@@ -744,7 +1003,7 @@ function createPetal() {
 
 
     /*
-       Rose colors
+       Rose colors.
     */
 
     const roseColors = [
@@ -786,7 +1045,7 @@ function createPetal() {
 
 
     /*
-       Falling speed
+       Falling speed.
     */
 
     const duration =
@@ -797,12 +1056,16 @@ function createPetal() {
         duration + "s";
 
 
+    /*
+       Random delay.
+    */
+
     petal.style.animationDelay =
         Math.random() * 1.5 + "s";
 
 
     /*
-       Rotation
+       Random rotation.
     */
 
     petal.style.transform =
@@ -810,6 +1073,10 @@ function createPetal() {
             ${Math.random() * 360}deg
         )`;
 
+
+    /*
+       Transparency.
+    */
 
     petal.style.opacity =
         Math.random() * 0.3 + 0.7;
@@ -821,7 +1088,7 @@ function createPetal() {
 
 
     /*
-       Remove after animation
+       Remove after animation.
     */
 
     setTimeout(
@@ -836,19 +1103,15 @@ function createPetal() {
 }
 
 
-
-/* =========================================
-   CONTINUOUS PETALS
-========================================= */
+/* =====================================================
+   START ROSE PETALS
+===================================================== */
 
 setInterval(
     createPetal,
     350
 );
 
-
-
-/* Initial petals */
 
 for (
     let i = 0;
