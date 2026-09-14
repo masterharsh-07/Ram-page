@@ -24,7 +24,7 @@ const petalContainer =
 
 
 /* =====================================================
-   CHECK SLIDES
+   SLIDE INFORMATION
 ===================================================== */
 
 console.log("Total slides:", slides.length);
@@ -32,12 +32,6 @@ console.log("Total slides:", slides.length);
 
 /*
    Automatically find the video slide.
-
-   This is better than using:
-   const VIDEO_SLIDE = 5;
-
-   because your page currently appears to have
-   more than 7 slides.
 */
 
 const VIDEO_SLIDE =
@@ -47,7 +41,7 @@ const VIDEO_SLIDE =
 
 
 /*
-   Final slide is always the last slide.
+   Last slide = final collage.
 */
 
 const FINAL_SLIDE =
@@ -98,9 +92,7 @@ if (slideDots) {
 
 
         if (index === 0) {
-
             dot.classList.add("active");
-
         }
 
 
@@ -172,8 +164,8 @@ function showSlide(index) {
 
 
     /*
-       If leaving video slide,
-       stop the video.
+       Stop video whenever we leave
+       the video slide.
     */
 
     if (
@@ -211,10 +203,8 @@ function startVideo() {
 
 
     /*
-       Make sure video is muted.
-
-       Muted autoplay is allowed much more
-       reliably on mobile browsers.
+       Muted autoplay is much more reliable
+       on mobile browsers.
     */
 
     devotionalVideo.muted = true;
@@ -233,7 +223,7 @@ function startVideo() {
 
 
     /*
-       Start from beginning.
+       Start video from beginning.
     */
 
     try {
@@ -251,7 +241,7 @@ function startVideo() {
 
 
     /*
-       Play video.
+       Play video automatically.
     */
 
     const playPromise =
@@ -260,20 +250,22 @@ function startVideo() {
 
     if (playPromise !== undefined) {
 
-        playPromise.then(function () {
+        playPromise
+            .then(function () {
 
-            console.log(
-                "✓ Video started automatically."
-            );
+                console.log(
+                    "✓ Video started automatically."
+                );
 
-        }).catch(function (error) {
+            })
+            .catch(function (error) {
 
-            console.error(
-                "✗ Video autoplay failed:",
-                error
-            );
+                console.error(
+                    "✗ Video autoplay failed:",
+                    error
+                );
 
-        });
+            });
 
     }
 
@@ -306,21 +298,21 @@ function goToSlide(index) {
 
 
     /*
-       Stop current timer.
+       Stop existing slideshow timer.
     */
 
     clearInterval(autoSlideTimer);
 
 
     /*
-       Change current slide.
+       Change slide.
     */
 
     currentSlide = index;
 
 
     /*
-       Display slide.
+       Show selected slide.
     */
 
     showSlide(currentSlide);
@@ -344,8 +336,8 @@ function goToSlide(index) {
 
 
         /*
-           Small delay allows the slide to become
-           visible before attempting playback.
+           Wait briefly for the video slide
+           to become visible.
         */
 
         setTimeout(function () {
@@ -480,14 +472,15 @@ if (prevBtn) {
 function startAutoSlide() {
 
     /*
-       Clear old timer.
+       Clear previous timer.
     */
 
     clearInterval(autoSlideTimer);
 
 
     /*
-       Don't start before Darshan button.
+       Slideshow only starts after
+       Darshan button is clicked.
     */
 
     if (!slideshowStarted) {
@@ -496,7 +489,7 @@ function startAutoSlide() {
 
 
     /*
-       Don't start timer on video.
+       Don't start timer on video slide.
     */
 
     if (
@@ -523,20 +516,19 @@ function startAutoSlide() {
 
 
     console.log(
-        "Automatic slideshow started."
+        "✓ Automatic slideshow started."
     );
 
 
     /*
-       Change every 5 seconds.
+       Change image every 5 seconds.
     */
 
     autoSlideTimer = setInterval(
         function () {
 
             /*
-               If final slide reached,
-               stop everything.
+               Stop at final slide.
             */
 
             if (
@@ -571,7 +563,7 @@ function startAutoSlide() {
 
 
             /* =========================================
-               VIDEO REACHED
+               VIDEO SLIDE REACHED
             ========================================== */
 
             if (
@@ -580,7 +572,7 @@ function startAutoSlide() {
             ) {
 
                 console.log(
-                    "✓ Video slide reached automatically."
+                    "✓ Video slide reached."
                 );
 
 
@@ -590,8 +582,7 @@ function startAutoSlide() {
 
 
                 /*
-                   Give browser a moment to display
-                   the video slide.
+                   Start video automatically.
                 */
 
                 setTimeout(function () {
@@ -607,16 +598,22 @@ function startAutoSlide() {
 
 
             /* =========================================
-               FINAL SLIDE
+               FINAL SLIDE REACHED
             ========================================== */
 
             if (
                 currentSlide === FINAL_SLIDE
             ) {
 
+                console.log(
+                    "✓ Final slide reached."
+                );
+
+
                 clearInterval(
                     autoSlideTimer
                 );
+
 
                 return;
 
@@ -664,7 +661,25 @@ if (startButton) {
 
                 try {
 
+                    /*
+                       Make sure music starts
+                       from the beginning.
+                    */
+
+                    bgMusic.currentTime = 0;
+
                     bgMusic.volume = 1.0;
+
+
+                    /*
+                       Play ONCE.
+
+                       There is intentionally NO:
+                       bgMusic.loop = true
+                    */
+
+                    bgMusic.loop = false;
+
 
                     await bgMusic.play();
 
@@ -701,7 +716,7 @@ if (startButton) {
 
 
             /* =========================================
-               START FROM FIRST SLIDE
+               START SLIDESHOW FROM FIRST SLIDE
             ========================================== */
 
             currentSlide = 0;
@@ -725,6 +740,38 @@ if (startButton) {
 
 
 /* =====================================================
+   MUSIC ENDED EVENT
+===================================================== */
+
+if (bgMusic) {
+
+    bgMusic.addEventListener(
+        "ended",
+        function () {
+
+            console.log(
+                "✓ Background music finished."
+            );
+
+
+            /*
+               Make absolutely sure it
+               does not restart.
+            */
+
+            bgMusic.pause();
+
+            bgMusic.currentTime = 0;
+
+            bgMusic.loop = false;
+
+        }
+    );
+
+}
+
+
+/* =====================================================
    VIDEO EVENTS
 ===================================================== */
 
@@ -732,7 +779,7 @@ if (devotionalVideo) {
 
 
     /*
-       Video loaded.
+       Video loaded successfully.
     */
 
     devotionalVideo.addEventListener(
@@ -748,7 +795,7 @@ if (devotionalVideo) {
 
 
     /*
-       Video started playing.
+       Video started.
     */
 
     devotionalVideo.addEventListener(
@@ -764,7 +811,7 @@ if (devotionalVideo) {
 
 
     /*
-       Video failed.
+       Video loading error.
     */
 
     devotionalVideo.addEventListener(
@@ -780,7 +827,8 @@ if (devotionalVideo) {
 
 
     /*
-       Video ended.
+       When video finishes,
+       move to the final collage.
     */
 
     devotionalVideo.addEventListener(
@@ -798,7 +846,7 @@ if (devotionalVideo) {
 
 
             /*
-               Go directly to final collage.
+               Move to final slide.
             */
 
             currentSlide =
@@ -835,7 +883,6 @@ let touchEndX = 0;
 
 if (slideshow) {
 
-
     slideshow.addEventListener(
         "touchstart",
         function (event) {
@@ -868,15 +915,17 @@ if (slideshow) {
                 event.changedTouches[0].screenX;
 
 
-            const distance =
+            const swipeDistance =
                 touchEndX - touchStartX;
 
 
             /*
-               Swipe left = next.
+               Swipe LEFT = NEXT
             */
 
-            if (distance < -50) {
+            if (
+                swipeDistance < -50
+            ) {
 
                 nextSlide();
 
@@ -884,10 +933,12 @@ if (slideshow) {
 
 
             /*
-               Swipe right = previous.
+               Swipe RIGHT = PREVIOUS
             */
 
-            else if (distance > 50) {
+            else if (
+                swipeDistance > 50
+            ) {
 
                 previousSlide();
 
@@ -915,6 +966,10 @@ document.addEventListener(
         }
 
 
+        /*
+           Right arrow = next.
+        */
+
         if (
             event.key === "ArrowRight"
         ) {
@@ -924,7 +979,11 @@ document.addEventListener(
         }
 
 
-        if (
+        /*
+           Left arrow = previous.
+        */
+
+        else if (
             event.key === "ArrowLeft"
         ) {
 
@@ -951,9 +1010,12 @@ if (slides.length > 0) {
 
 /*
    IMPORTANT:
-   Do NOT call startAutoSlide() here.
 
-   Slideshow starts only after:
+   We DO NOT call startAutoSlide() here.
+
+   The slideshow starts only after
+   the visitor clicks:
+
    "दर्शनासाठी स्पर्श करा"
 */
 
@@ -979,7 +1041,7 @@ function createPetal() {
 
 
     /*
-       Random position.
+       Random horizontal position.
     */
 
     petal.style.left =
@@ -1003,7 +1065,7 @@ function createPetal() {
 
 
     /*
-       Rose colors.
+       Rose petal colors.
     */
 
     const roseColors = [
@@ -1045,7 +1107,7 @@ function createPetal() {
 
 
     /*
-       Falling speed.
+       Falling duration.
     */
 
     const duration =
@@ -1057,7 +1119,7 @@ function createPetal() {
 
 
     /*
-       Random delay.
+       Random animation delay.
     */
 
     petal.style.animationDelay =
@@ -1075,7 +1137,7 @@ function createPetal() {
 
 
     /*
-       Transparency.
+       Random transparency.
     */
 
     petal.style.opacity =
@@ -1088,7 +1150,7 @@ function createPetal() {
 
 
     /*
-       Remove after animation.
+       Remove old petals.
     */
 
     setTimeout(
