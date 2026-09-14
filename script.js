@@ -1,249 +1,241 @@
 /* =========================================
-   MUSIC
+   WELCOME SCREEN + BACKGROUND MUSIC
 ========================================= */
 
-const startScreen =
-    document.getElementById("startScreen");
-
-const startButton =
-    document.getElementById("startButton");
-
-const bgMusic =
-    document.getElementById("bgMusic");
-
-
-/*
-    Music starts only after the visitor
-    interacts with the welcome screen.
-
-    This is necessary because mobile browsers
-    normally block sound autoplay.
-*/
+const startScreen = document.getElementById("startScreen");
+const startButton = document.getElementById("startButton");
+const bgMusic = document.getElementById("bgMusic");
 
 if (startButton && bgMusic) {
 
-    startButton.addEventListener(
-        "click",
-        async function () {
+    startButton.addEventListener("click", async function () {
 
-            try {
+        try {
+            bgMusic.volume = 1.0;
+            await bgMusic.play();
 
-                /*
-                    Set volume.
-                */
+            console.log("Background music started.");
 
-                bgMusic.volume = 1.0;
-
-
-                /*
-                    Start music.
-                */
-
-                await bgMusic.play();
-
-
-                console.log(
-                    "Music started successfully."
-                );
-
-
-                /*
-                    Hide welcome screen.
-                */
-
-                if (startScreen) {
-
-                    startScreen.classList.add(
-                        "hidden"
-                    );
-
-                }
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "Music could not start:",
-                    error
-                );
-
-
-                /*
-                    Still open webpage if
-                    browser refuses audio.
-                */
-
-                if (startScreen) {
-
-                    startScreen.classList.add(
-                        "hidden"
-                    );
-
-                }
-
-            }
-
+        } catch (error) {
+            console.error("Music could not start:", error);
         }
-    );
+
+        if (startScreen) {
+            startScreen.classList.add("hidden");
+        }
+
+    });
 
 }
+
 
 
 /* =========================================
    SLIDESHOW ELEMENTS
 ========================================= */
 
-const slides =
-    document.querySelectorAll(".slide");
+const slides = document.querySelectorAll(".slide");
+const slideshow = document.getElementById("slideshow");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const slideDots = document.getElementById("slideDots");
 
-const slideshow =
-    document.getElementById("slideshow");
-
-const prevBtn =
-    document.getElementById("prevBtn");
-
-const nextBtn =
-    document.getElementById("nextBtn");
-
-const slideDots =
-    document.getElementById("slideDots");
-
-
-/* Current slide */
+const devotionalVideo =
+    document.getElementById("devotionalVideo");
 
 let currentSlide = 0;
+let autoSlideTimer = null;
 
-
-/* Timer */
-
-let autoSlideTimer;
 
 
 /* =========================================
    CREATE SLIDE DOTS
 ========================================= */
 
-slides.forEach(
-    (slide, index) => {
+slides.forEach(function (slide, index) {
 
-        const dot =
-            document.createElement("button");
+    const dot = document.createElement("button");
+
+    dot.classList.add("dot");
+
+    dot.setAttribute(
+        "aria-label",
+        `Go to slide ${index + 1}`
+    );
+
+    if (index === 0) {
+        dot.classList.add("active");
+    }
+
+    dot.addEventListener("click", function () {
+
+        goToSlide(index);
+
+    });
+
+    slideDots.appendChild(dot);
+
+});
 
 
-        dot.classList.add("dot");
 
+/* =========================================
+   SHOW CURRENT SLIDE
+========================================= */
 
-        dot.setAttribute(
-            "aria-label",
-            `Go to slide ${index + 1}`
+function showSlide(index) {
+
+    slides.forEach(function (slide, i) {
+
+        slide.classList.toggle(
+            "active",
+            i === index
         );
 
+    });
+
+
+    /* Update dots */
+
+    const dots =
+        document.querySelectorAll(".dot");
+
+    dots.forEach(function (dot, i) {
+
+        dot.classList.toggle(
+            "active",
+            i === index
+        );
+
+    });
+
+
+    /*
+       Stop video if we move away
+       from the video slide.
+    */
+
+    if (
+        devotionalVideo &&
+        !slides[index].contains(devotionalVideo)
+    ) {
+
+        devotionalVideo.pause();
+
+    }
+
+}
+
+
+
+/* =========================================
+   GO TO A PARTICULAR SLIDE
+========================================= */
+
+function goToSlide(index) {
+
+    if (
+        index < 0 ||
+        index >= slides.length
+    ) {
+        return;
+    }
+
+
+    /* Clear any existing timer */
+
+    clearInterval(autoSlideTimer);
+
+
+    currentSlide = index;
+
+    showSlide(currentSlide);
+
+
+
+    /*
+       =====================================
+       VIDEO SLIDE
+       =====================================
+
+       The normal 5-second slideshow
+       does NOT run while the video
+       is displayed.
+    */
+
+    if (
+        devotionalVideo &&
+        slides[currentSlide].contains(
+            devotionalVideo
+        )
+    ) {
 
         /*
-            First dot active.
+           Start video from beginning
         */
 
-        if (index === 0) {
-
-            dot.classList.add(
-                "active"
-            );
-
-        }
+        devotionalVideo.currentTime = 0;
 
 
         /*
-            Dot click.
+           Try to play automatically.
+           Mobile browsers may block
+           autoplay.
         */
 
-        dot.addEventListener(
-            "click",
+        devotionalVideo.play().catch(
             function () {
 
-                currentSlide = index;
-
-                showSlide(
-                    currentSlide
+                console.log(
+                    "Video autoplay blocked. Press the play button."
                 );
-
-
-                /*
-                    Continue autoplay if
-                    not on final collage.
-                */
-
-                if (
-                    currentSlide <
-                    slides.length - 1
-                ) {
-
-                    resetAutoSlide();
-
-                }
-
-                else {
-
-                    clearInterval(
-                        autoSlideTimer
-                    );
-
-                }
 
             }
         );
 
 
-        slideDots.appendChild(dot);
+        /*
+           IMPORTANT:
+           Do not start the 5-second timer.
+        */
 
+        return;
     }
-);
 
-
-/* =========================================
-   SHOW SLIDE
-========================================= */
-
-function showSlide(index) {
-
-    /*
-        Activate selected slide.
-    */
-
-    slides.forEach(
-        (slide, i) => {
-
-            slide.classList.toggle(
-                "active",
-                i === index
-            );
-
-        }
-    );
 
 
     /*
-        Update dots.
+       =====================================
+       FINAL COLLAGE
+       =====================================
     */
 
-    const dots =
-        document.querySelectorAll(
-            ".dot"
-        );
+    if (
+        currentSlide ===
+        slides.length - 1
+    ) {
+
+        /*
+           Stop slideshow permanently.
+        */
+
+        clearInterval(autoSlideTimer);
+
+        return;
+    }
 
 
-    dots.forEach(
-        (dot, i) => {
 
-            dot.classList.toggle(
-                "active",
-                i === index
-            );
+    /*
+       =====================================
+       NORMAL IMAGE SLIDES
+       =====================================
+    */
 
-        }
-    );
+    startAutoSlide();
 
 }
+
 
 
 /* =========================================
@@ -252,41 +244,19 @@ function showSlide(index) {
 
 function nextSlide() {
 
-    /*
-        Don't go beyond final slide.
-    */
-
     if (
         currentSlide <
         slides.length - 1
     ) {
 
-        currentSlide++;
-
-        showSlide(
-            currentSlide
+        goToSlide(
+            currentSlide + 1
         );
-
-
-        /*
-            Stop automatically at
-            final Ram + Ganapati collage.
-        */
-
-        if (
-            currentSlide ===
-            slides.length - 1
-        ) {
-
-            clearInterval(
-                autoSlideTimer
-            );
-
-        }
 
     }
 
 }
+
 
 
 /* =========================================
@@ -297,30 +267,14 @@ function previousSlide() {
 
     if (currentSlide > 0) {
 
-        currentSlide--;
-
-        showSlide(
-            currentSlide
+        goToSlide(
+            currentSlide - 1
         );
-
-
-        /*
-            If visitor goes back from
-            final collage, autoplay resumes.
-        */
-
-        if (
-            currentSlide <
-            slides.length - 1
-        ) {
-
-            resetAutoSlide();
-
-        }
 
     }
 
 }
+
 
 
 /* =========================================
@@ -335,20 +289,11 @@ if (nextBtn) {
 
             nextSlide();
 
-
-            if (
-                currentSlide <
-                slides.length - 1
-            ) {
-
-                resetAutoSlide();
-
-            }
-
         }
     );
 
 }
+
 
 
 /* =========================================
@@ -369,83 +314,180 @@ if (prevBtn) {
 }
 
 
+
 /* =========================================
-   AUTO SLIDESHOW
+   NORMAL IMAGE AUTO SLIDESHOW
 ========================================= */
 
 function startAutoSlide() {
 
-    clearInterval(
-        autoSlideTimer
-    );
+    clearInterval(autoSlideTimer);
 
 
-    autoSlideTimer =
-        setInterval(
-            function () {
+    autoSlideTimer = setInterval(
+        function () {
+
+            /*
+               Stop before the video.
+
+               If current slide is the last
+               image, do not automatically
+               move anywhere.
+            */
+
+            if (
+                currentSlide >=
+                slides.length - 2
+            ) {
+
+                clearInterval(
+                    autoSlideTimer
+                );
 
                 /*
-                    Stop at final collage.
+                   Move to video manually
+                   only when current image
+                   is the image before video.
                 */
 
                 if (
-                    currentSlide >=
-                    slides.length - 1
+                    currentSlide ===
+                    slides.length - 3
                 ) {
 
-                    clearInterval(
-                        autoSlideTimer
+                    goToSlide(
+                        currentSlide + 1
                     );
-
-                    return;
 
                 }
 
-
-                nextSlide();
-
-            },
-            5000
-        );
-
-}
+                return;
+            }
 
 
-/* =========================================
-   RESET AUTOPLAY
-========================================= */
+            /*
+               Move to next image
+            */
 
-function resetAutoSlide() {
+            goToSlide(
+                currentSlide + 1
+            );
 
-    clearInterval(
-        autoSlideTimer
+        },
+        5000
     );
 
+}
 
-    if (
-        currentSlide <
-        slides.length - 1
-    ) {
 
-        startAutoSlide();
 
-    }
+/* =========================================
+   VIDEO FINISHED
+========================================= */
+
+if (devotionalVideo) {
+
+    devotionalVideo.addEventListener(
+        "ended",
+        function () {
+
+            console.log(
+                "Video finished."
+            );
+
+
+            /*
+               After the complete 48-second
+               video, show the final collage.
+            */
+
+            if (
+                currentSlide <
+                slides.length - 1
+            ) {
+
+                currentSlide++;
+
+                showSlide(currentSlide);
+
+            }
+
+
+            /*
+               Make sure slideshow remains
+               stopped at the final collage.
+            */
+
+            clearInterval(
+                autoSlideTimer
+            );
+
+        }
+    );
 
 }
 
 
+
 /* =========================================
-   TOUCH SWIPE
+   WHEN VIDEO STARTS PLAYING
+========================================= */
+
+if (devotionalVideo) {
+
+    devotionalVideo.addEventListener(
+        "play",
+        function () {
+
+            /*
+               Stop the normal 5-second
+               slideshow timer.
+            */
+
+            clearInterval(
+                autoSlideTimer
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =========================================
+   WHEN VIDEO IS PAUSED
+========================================= */
+
+if (devotionalVideo) {
+
+    devotionalVideo.addEventListener(
+        "pause",
+        function () {
+
+            /*
+               Do NOT start the image
+               slideshow while video is paused.
+            */
+
+            clearInterval(
+                autoSlideTimer
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =========================================
+   TOUCH / SWIPE SUPPORT
 ========================================= */
 
 let touchStartX = 0;
-
 let touchEndX = 0;
 
-
-/*
-    Finger touches screen.
-*/
 
 if (slideshow) {
 
@@ -454,8 +496,7 @@ if (slideshow) {
         function (event) {
 
             touchStartX =
-                event.changedTouches[0]
-                    .screenX;
+                event.changedTouches[0].screenX;
 
         },
         {
@@ -464,17 +505,12 @@ if (slideshow) {
     );
 
 
-    /*
-        Finger leaves screen.
-    */
-
     slideshow.addEventListener(
         "touchend",
         function (event) {
 
             touchEndX =
-                event.changedTouches[0]
-                    .screenX;
+                event.changedTouches[0].screenX;
 
             handleSwipe();
 
@@ -485,6 +521,7 @@ if (slideshow) {
     );
 
 }
+
 
 
 /* =========================================
@@ -498,30 +535,18 @@ function handleSwipe() {
 
 
     /*
-        Swipe LEFT
-        → Next slide
+       Swipe left = next
     */
 
     if (swipeDistance < -50) {
 
         nextSlide();
 
-
-        if (
-            currentSlide <
-            slides.length - 1
-        ) {
-
-            resetAutoSlide();
-
-        }
-
     }
 
 
     /*
-        Swipe RIGHT
-        → Previous slide
+       Swipe right = previous
     */
 
     else if (swipeDistance > 50) {
@@ -533,17 +558,14 @@ function handleSwipe() {
 }
 
 
+
 /* =========================================
-   KEYBOARD CONTROLS
+   KEYBOARD ARROW SUPPORT
 ========================================= */
 
 document.addEventListener(
     "keydown",
     function (event) {
-
-        /*
-            Right arrow
-        */
 
         if (
             event.key ===
@@ -552,22 +574,7 @@ document.addEventListener(
 
             nextSlide();
 
-
-            if (
-                currentSlide <
-                slides.length - 1
-            ) {
-
-                resetAutoSlide();
-
-            }
-
         }
-
-
-        /*
-            Left arrow
-        */
 
         else if (
             event.key ===
@@ -582,6 +589,7 @@ document.addEventListener(
 );
 
 
+
 /* =========================================
    INITIALIZE SLIDESHOW
 ========================================= */
@@ -589,6 +597,7 @@ document.addEventListener(
 showSlide(0);
 
 startAutoSlide();
+
 
 
 /* =========================================
@@ -601,10 +610,6 @@ const petalContainer =
     );
 
 
-/*
-    Create one rose petal.
-*/
-
 function createPetal() {
 
     if (!petalContainer) {
@@ -615,27 +620,19 @@ function createPetal() {
     const petal =
         document.createElement("div");
 
-
-    petal.classList.add(
-        "petal"
-    );
+    petal.classList.add("petal");
 
 
-    /*
-        Random horizontal position.
-    */
+    /* Random horizontal position */
 
     petal.style.left =
         Math.random() * 100 + "vw";
 
 
-    /*
-        Random size.
-    */
+    /* Random size */
 
     const size =
         Math.random() * 9 + 12;
-
 
     petal.style.width =
         size + "px";
@@ -644,9 +641,7 @@ function createPetal() {
         size * 1.45 + "px";
 
 
-    /*
-        Different rose shades.
-    */
+    /* Rose colors */
 
     const roseColors = [
 
@@ -686,9 +681,7 @@ function createPetal() {
         ];
 
 
-    /*
-        Random falling speed.
-    */
+    /* Random falling speed */
 
     const duration =
         Math.random() * 5 + 6;
@@ -698,17 +691,11 @@ function createPetal() {
         duration + "s";
 
 
-    /*
-        Random starting delay.
-    */
-
     petal.style.animationDelay =
         Math.random() * 1.5 + "s";
 
 
-    /*
-        Random rotation.
-    */
+    /* Random rotation */
 
     petal.style.transform =
         `rotate(
@@ -716,26 +703,16 @@ function createPetal() {
         )`;
 
 
-    /*
-        Random transparency.
-    */
-
     petal.style.opacity =
         Math.random() * 0.3 + 0.7;
 
-
-    /*
-        Add petal to page.
-    */
 
     petalContainer.appendChild(
         petal
     );
 
 
-    /*
-        Remove after animation.
-    */
+    /* Remove old petal */
 
     setTimeout(
         function () {
@@ -749,8 +726,9 @@ function createPetal() {
 }
 
 
+
 /* =========================================
-   CONTINUOUS PETALS
+   CONTINUOUS ROSE PETALS
 ========================================= */
 
 setInterval(
@@ -759,10 +737,7 @@ setInterval(
 );
 
 
-/*
-    Create some petals immediately
-    when page opens.
-*/
+/* Initial petals */
 
 for (
     let i = 0;
