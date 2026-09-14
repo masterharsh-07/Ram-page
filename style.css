@@ -8,19 +8,14 @@
     box-sizing: border-box;
 }
 
-
 html {
     width: 100%;
     min-height: 100%;
 }
 
-
 body {
-
     width: 100%;
-
     min-height: 100vh;
-
     overflow-x: hidden;
 
     font-family:
@@ -43,21 +38,17 @@ body {
 
 
 /* =========================================
-   WELCOME SCREEN
+   WELCOME / MUSIC SCREEN
 ========================================= */
 
 .start-screen {
-
     position: fixed;
-
     inset: 0;
 
     z-index: 9999;
 
     display: flex;
-
     justify-content: center;
-
     align-items: center;
 
     background:
@@ -73,21 +64,14 @@ body {
         visibility 0.8s ease;
 }
 
-
 .start-screen.hidden {
-
     opacity: 0;
-
     visibility: hidden;
-
     pointer-events: none;
 }
 
-
 .start-content {
-
     text-align: center;
-
     padding: 25px 20px;
 
     animation:
@@ -97,13 +81,7 @@ body {
         infinite;
 }
 
-
-/* =========================================
-   START OM
-========================================= */
-
 .start-om {
-
     font-size: 70px;
 
     color: #a63b00;
@@ -111,37 +89,22 @@ body {
     margin-bottom: 5px;
 
     text-shadow:
-        0 0 10px
-        rgba(255, 210, 80, 0.9),
-
-        0 0 25px
-        rgba(255, 130, 0, 0.5);
+        0 0 10px rgba(255, 210, 80, 0.9),
+        0 0 25px rgba(255, 130, 0, 0.5);
 }
 
-
-/* =========================================
-   START HEADING
-========================================= */
-
 .start-content h1 {
-
-    font-size:
-        clamp(34px, 8vw, 55px);
+    font-size: clamp(34px, 8vw, 55px);
 
     color: #8e2700;
 
     margin-bottom: 8px;
 
     text-shadow:
-        2px 2px 0 #ffd86a,
-
-        0 0 15px
-        rgba(255, 255, 255, 0.7);
+        2px 2px 0 #ffd86a;
 }
 
-
 .start-content p {
-
     font-size: 20px;
 
     color: #9b3600;
@@ -149,13 +112,7 @@ body {
     margin-bottom: 15px;
 }
 
-
-/* =========================================
-   START DIYA
-========================================= */
-
 .start-diya {
-
     font-size: 55px;
 
     margin-bottom: 22px;
@@ -167,13 +124,7 @@ body {
         infinite alternate;
 }
 
-
-/* =========================================
-   START BUTTON
-========================================= */
-
 .start-button {
-
     border: none;
 
     padding:
@@ -200,41 +151,19 @@ body {
 
     box-shadow:
         0 7px 20px
-        rgba(100, 35, 0, 0.35),
-
-        inset 0 1px 2px
-        rgba(255, 255, 255, 0.35);
+        rgba(100, 35, 0, 0.35);
 
     cursor: pointer;
 
     transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+        transform 0.2s ease;
 }
-
 
 .start-button:hover {
-
     transform: scale(1.05);
-
-    box-shadow:
-        0 10px 28px
-        rgba(100, 35, 0, 0.45);
 }
-
-
-.start-button:active {
-
-    transform: scale(0.97);
-}
-
-
-/* =========================================
-   START TEXT
-========================================= */
 
 .start-content h4 {
-
     margin-top: 28px;
 
     font-size: 17px;
@@ -242,9 +171,7 @@ body {
     color: #873300;
 }
 
-
 .start-content h5 {
-
     margin-top: 18px;
 
     font-size: 15px;
@@ -261,25 +188,18 @@ body {
 
     0%,
     100% {
-
-        transform:
-            translateY(0);
+        transform: translateY(0);
     }
 
     50% {
-
-        transform:
-            translateY(-7px);
+        transform: translateY(-7px);
     }
 }
-
 
 @keyframes diyaGlow {
 
     from {
-
-        transform:
-            scale(1);
+        transform: scale(1);
 
         filter:
             drop-shadow(
@@ -288,9 +208,7 @@ body {
     }
 
     to {
-
-        transform:
-            scale(1.08);
+        transform: scale(1.08);
 
         filter:
             drop-shadow(
@@ -305,7 +223,6 @@ body {
 ========================================= */
 
 .page {
-
     position: relative;
 
     width: 100%;
@@ -320,21 +237,13 @@ body {
     overflow: hidden;
 }
 
-
-/* =========================================
-   BACKGROUND GLOW
-========================================= */
-
 .background-glow {
-
     position: absolute;
 
     width: 650px;
-
     height: 650px;
 
     left: 50%;
-
     top: 35%;
 
     transform:
@@ -359,11 +268,9 @@ body {
 ========================================= */
 
 .ring {
-
     position: absolute;
 
     left: 50%;
-
     top: 40%;
 
     transform:
@@ -378,29 +285,20 @@ body {
     pointer-events: none;
 }
 
-
 .ring-1 {
-
     width: 600px;
-
     height: 600px;
 }
 
-
 .ring-2 {
-
     width: 850px;
-
     height: 850px;
 
     opacity: 0.45;
 }
 
-
 .ring-3 {
-
     width: 1100px;
-
     height: 1100px;
 
     opacity: 0.25;
@@ -412,7 +310,6 @@ body {
 ========================================= */
 
 .header {
-
     position: relative;
 
     z-index: 3;
@@ -422,38 +319,28 @@ body {
     margin-bottom: 12px;
 }
 
-
 .om {
-
     font-size: 55px;
 
     color: #a53600;
 
     text-shadow:
         0 0 8px #ffd66b,
-
         0 0 20px
         rgba(255, 145, 0, 0.45);
 }
 
-
 .header h1 {
-
     font-size:
         clamp(34px, 6vw, 52px);
 
     color: #8d2900;
 
     text-shadow:
-        2px 2px 0 #ffd76b,
-
-        0 0 12px
-        rgba(255, 255, 255, 0.65);
+        2px 2px 0 #ffd76b;
 }
 
-
 .header p {
-
     margin-top: 3px;
 
     font-size: 20px;
@@ -467,7 +354,6 @@ body {
 ========================================= */
 
 .slideshow-wrapper {
-
     position: relative;
 
     z-index: 3;
@@ -478,9 +364,7 @@ body {
     margin: 0 auto;
 }
 
-
 .slideshow {
-
     position: relative;
 
     width: 100%;
@@ -488,13 +372,43 @@ body {
     touch-action: pan-y;
 }
 
+.slide {
+    display: none;
+
+    animation:
+        slideAppear
+        0.5s
+        ease;
+}
+
+.slide.active {
+    display: block;
+}
+
+@keyframes slideAppear {
+
+    from {
+        opacity: 0;
+
+        transform:
+            scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            scale(1);
+    }
+}
+
 
 /* =========================================
    PHOTO CARD
+   NO BOX / NO BORDER
 ========================================= */
 
 .photo-card {
-
     width: 100%;
 
     padding: 0;
@@ -509,49 +423,11 @@ body {
 }
 
 
-.slide {
-
-    display: none;
-
-    animation:
-        slideAppear
-        0.5s
-        ease;
-}
-
-
-.slide.active {
-
-    display: block;
-}
-
-
-@keyframes slideAppear {
-
-    from {
-
-        opacity: 0;
-
-        transform:
-            scale(0.98);
-    }
-
-    to {
-
-        opacity: 1;
-
-        transform:
-            scale(1);
-    }
-}
-
-
 /* =========================================
-   TITLE
+   SLIDE TITLE
 ========================================= */
 
 .card-title {
-
     margin-bottom: 8px;
 
     font-size:
@@ -562,19 +438,15 @@ body {
     color: #7d2800;
 
     text-shadow:
-        1px 1px 0 #ffd66b,
-
-        0 0 8px
-        rgba(255, 255, 255, 0.7);
+        1px 1px 0 #ffd66b;
 }
 
 
 /* =========================================
-   IMAGE AREA
+   IMAGE BOX
 ========================================= */
 
 .image-box {
-
     width:
         min(96vw, 700px);
 
@@ -582,8 +454,6 @@ body {
         min(72vh, 600px);
 
     margin: 0 auto;
-
-    padding: 0;
 
     display: flex;
 
@@ -602,15 +472,8 @@ body {
     box-shadow: none;
 }
 
-
-/* =========================================
-   IMAGES
-========================================= */
-
 .image-box img {
-
     width: 100%;
-
     height: 100%;
 
     display: block;
@@ -619,13 +482,9 @@ body {
 
     object-position: center;
 
-    background: transparent;
-
     border: none;
 
     border-radius: 0;
-
-    box-shadow: none;
 }
 
 
@@ -634,14 +493,11 @@ body {
 ========================================= */
 
 .video-box {
-
-    position: relative;
-
     width:
-        min(96vw, 700px);
+        min(96vw, 900px);
 
     height:
-        min(72vh, 600px);
+        min(72vh, 650px);
 
     margin: 0 auto;
 
@@ -653,7 +509,7 @@ body {
 
     overflow: hidden;
 
-    background: transparent;
+    background: #000;
 
     border: none;
 
@@ -662,33 +518,27 @@ body {
     box-shadow: none;
 }
 
-
 .video-box video {
-
     width: 100%;
-
     height: 100%;
 
     display: block;
 
     object-fit: contain;
 
-    background: transparent;
+    background: #000;
 
     border: none;
 
     border-radius: 0;
-
-    box-shadow: none;
 }
 
 
 /* =========================================
-   FINAL COLLAGE
+   FINAL RAM + GANAPATI COLLAGE
 ========================================= */
 
 .ram-ganapati-collage {
-
     width:
         min(96vw, 700px);
 
@@ -697,41 +547,27 @@ body {
 
     margin: 0 auto;
 
-    padding: 0;
-
     display: grid;
 
     grid-template-columns:
         1fr 1fr;
 
-    gap: 5px;
-
-    background: transparent;
+    gap: 3px;
 }
 
-
 .collage-photo {
-
     width: 100%;
-
     height: 100%;
 
     overflow: hidden;
 
-    background: transparent;
-
     border: none;
 
-    border-radius: 0;
-
-    box-shadow: none;
+    background: transparent;
 }
 
-
 .collage-photo img {
-
     width: 100%;
-
     height: 100%;
 
     display: block;
@@ -739,19 +575,14 @@ body {
     object-fit: contain;
 
     border: none;
-
-    border-radius: 0;
-
-    box-shadow: none;
 }
 
 
 /* =========================================
-   BUTTONS
+   NAVIGATION BUTTONS
 ========================================= */
 
 .slide-button {
-
     position: absolute;
 
     top: 50%;
@@ -760,7 +591,6 @@ body {
         translateY(-50%);
 
     width: 48px;
-
     height: 48px;
 
     border-radius: 50%;
@@ -779,7 +609,6 @@ body {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     cursor: pointer;
@@ -787,26 +616,17 @@ body {
     z-index: 10;
 }
 
-
 .slide-button:hover {
-
-    background:
-        rgba(110, 35, 0, 0.95);
-
     transform:
         translateY(-50%)
         scale(1.07);
 }
 
-
 .prev {
-
     left: -10px;
 }
 
-
 .next {
-
     right: -10px;
 }
 
@@ -816,11 +636,9 @@ body {
 ========================================= */
 
 .slide-dots {
-
     display: flex;
 
     justify-content: center;
-
     align-items: center;
 
     gap: 8px;
@@ -828,11 +646,8 @@ body {
     margin-top: 10px;
 }
 
-
 .dot {
-
     width: 10px;
-
     height: 10px;
 
     padding: 0;
@@ -847,9 +662,7 @@ body {
     cursor: pointer;
 }
 
-
 .dot.active {
-
     background: #8f2f00;
 
     transform:
@@ -862,7 +675,6 @@ body {
 ========================================= */
 
 .diyas {
-
     position: relative;
 
     z-index: 3;
@@ -876,9 +688,7 @@ body {
     margin-top: 15px;
 }
 
-
 .diya {
-
     font-size: 38px;
 
     animation:
@@ -894,7 +704,6 @@ body {
 ========================================= */
 
 .message {
-
     position: relative;
 
     z-index: 3;
@@ -904,17 +713,13 @@ body {
     margin-top: 15px;
 }
 
-
 .message h2 {
-
     font-size: 27px;
 
     color: #8c2b00;
 }
 
-
 .message p {
-
     margin-top: 5px;
 
     font-size: 16px;
@@ -924,9 +729,7 @@ body {
     font-weight: 600;
 }
 
-
 .stars {
-
     margin-top: 8px;
 
     color: #9b3a00;
@@ -940,7 +743,6 @@ body {
 ========================================= */
 
 #petal-container {
-
     position: fixed;
 
     inset: 0;
@@ -952,9 +754,7 @@ body {
     overflow: hidden;
 }
 
-
 .petal {
-
     position: fixed;
 
     top: -30px;
@@ -976,23 +776,15 @@ body {
         0 2px 5px
         rgba(90, 0, 20, 0.2);
 
-    filter:
-        drop-shadow(
-            0 2px 2px
-            rgba(80, 0, 0, 0.18)
-        );
-
     animation:
         fallPetal
         linear
         forwards;
 }
 
-
 @keyframes fallPetal {
 
     0% {
-
         transform:
             translate3d(
                 0,
@@ -1003,22 +795,18 @@ body {
     }
 
     25% {
-
         margin-left: 25px;
     }
 
     50% {
-
         margin-left: -20px;
     }
 
     75% {
-
         margin-left: 30px;
     }
 
     100% {
-
         transform:
             translate3d(
                 -10px,
@@ -1037,69 +825,47 @@ body {
 @media (max-width: 800px) {
 
     .page {
-
         padding:
-            15px
-            8px
-            25px;
+            12px
+            5px
+            20px;
     }
-
 
     .slideshow-wrapper {
-
-        width: 98vw;
+        width: 100vw;
     }
-
 
     .image-box {
+        width: 100vw;
 
-        width: 98vw;
-
-        height: 70vh;
-
-        min-height: 400px;
+        height: 72vh;
     }
-
 
     .video-box {
+        width: 100vw;
 
-        width: 98vw;
-
-        height: 70vh;
-
-        min-height: 400px;
+        height: 75vh;
     }
-
 
     .ram-ganapati-collage {
+        width: 100vw;
 
-        width: 98vw;
-
-        height: 70vh;
-
-        min-height: 400px;
+        height: 72vh;
     }
 
-
     .slide-button {
-
         width: 43px;
-
         height: 43px;
 
         font-size: 21px;
     }
 
-
     .prev {
-
-        left: 3px;
+        left: 2px;
     }
 
-
     .next {
-
-        right: 3px;
+        right: 2px;
     }
 }
 
@@ -1110,8 +876,8 @@ body {
 
 @media (max-width: 600px) {
 
+    html,
     body {
-
         width: 100vw;
 
         min-height: 100dvh;
@@ -1119,72 +885,62 @@ body {
         overflow-x: hidden;
     }
 
-
     .page {
-
         width: 100vw;
 
         min-height: 100dvh;
 
         padding:
-            5px
+            3px
             0
-            10px;
+            5px;
 
         overflow: hidden;
     }
 
 
     /* =====================================
-       HEADER
+       MOBILE HEADER
     ====================================== */
 
     .header {
-
-        margin-bottom: 2px;
+        margin-bottom: 1px;
 
         padding: 0;
     }
 
-
     .om {
-
-        font-size: 38px;
+        font-size: 35px;
 
         line-height: 1;
     }
 
-
     .header h1 {
+        font-size: 29px;
 
-        font-size: 30px;
-
-        line-height: 1.1;
+        line-height: 1.05;
     }
 
-
     .header p {
-
         font-size: 15px;
+
+        line-height: 1;
 
         margin-top: 2px;
     }
 
 
     /* =====================================
-       SLIDESHOW
+       MOBILE SLIDESHOW
     ====================================== */
 
     .slideshow-wrapper {
-
         width: 100vw;
 
         margin: 0;
     }
 
-
     .slideshow {
-
         width: 100vw;
 
         margin: 0;
@@ -1192,33 +948,85 @@ body {
 
 
     /* =====================================
-       TITLE
+       MOBILE TITLE
     ====================================== */
 
     .card-title {
+        font-size: 20px;
 
-        font-size: 21px;
+        line-height: 1.1;
 
-        line-height: 1.2;
+        margin-top: 2px;
 
-        margin-top: 3px;
+        margin-bottom: 2px;
 
-        margin-bottom: 4px;
-
-        padding: 0 5px;
+        padding:
+            0
+            4px;
     }
 
 
     /* =====================================
-       LARGE FULL-SCREEN PHOTO
+       MOBILE IMAGES
     ====================================== */
 
     .image-box {
+        width: 100vw;
+
+        height:
+            calc(100dvh - 125px);
+
+        min-height: 0;
+
+        max-height: none;
+
+        margin: 0;
+
+        padding: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        overflow: hidden;
+    }
+
+    .image-box img {
+        width: auto;
+
+        height: 100%;
+
+        max-width: 100vw;
+
+        max-height: 100%;
+
+        object-fit: contain;
+
+        object-position: center;
+    }
+
+
+    /* =====================================
+       ⭐ MOBILE ACTUAL VIDEO
+       ENLARGED, NOT OUTER BOX
+    ====================================== */
+
+    .video-slide {
+        width: 100vw;
+    }
+
+    .video-box {
+
+        /*
+           Outer frame
+        */
 
         width: 100vw;
 
         height:
-            calc(100dvh - 145px);
+            calc(100dvh - 105px);
 
         min-height: 0;
 
@@ -1236,25 +1044,29 @@ body {
 
         overflow: hidden;
 
-        background: transparent;
-
-        border: none;
-
-        border-radius: 0;
-
-        box-shadow: none;
+        background: #000;
     }
 
+    .video-box video {
 
-    .image-box img {
+        /*
+           THIS is what makes the
+           actual portrait video larger.
+        */
 
-        width: auto;
+        width: 145%;
 
         height: 100%;
 
-        max-width: 100vw;
+        /*
+           Prevent the browser from
+           limiting it to 100% of
+           the parent width.
+        */
 
-        max-height: 100%;
+        max-width: none;
+
+        max-height: none;
 
         display: block;
 
@@ -1262,72 +1074,11 @@ body {
 
         object-position: center;
 
-        border: none;
-
-        border-radius: 0;
-
-        box-shadow: none;
-    }
-
-
-    /* =====================================
-       MOBILE VIDEO
-    ====================================== */
-
-    .video-box {
-
-        width: 100vw;
-
-        height:
-            calc(100dvh - 145px);
-
-        min-height: 0;
-
-        max-height: none;
-
-        margin: 0;
-
-        padding: 0;
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        overflow: hidden;
-
-        background: transparent;
+        background: #000;
 
         border: none;
 
         border-radius: 0;
-
-        box-shadow: none;
-    }
-
-
-    .video-box video {
-
-        width: auto;
-
-        height: 100%;
-
-        max-width: 100vw;
-
-        max-height: 100%;
-
-        display: block;
-
-        object-fit: contain;
-
-        background: transparent;
-
-        border: none;
-
-        border-radius: 0;
-
-        box-shadow: none;
     }
 
 
@@ -1336,11 +1087,10 @@ body {
     ====================================== */
 
     .ram-ganapati-collage {
-
         width: 100vw;
 
         height:
-            calc(100dvh - 145px);
+            calc(100dvh - 125px);
 
         min-height: 0;
 
@@ -1356,94 +1106,57 @@ body {
             1fr 1fr;
 
         gap: 2px;
-
-        background: transparent;
     }
-
 
     .collage-photo {
-
         width: 100%;
 
         height: 100%;
-
-        overflow: hidden;
-
-        background: transparent;
-
-        border: none;
-
-        border-radius: 0;
-
-        box-shadow: none;
     }
 
-
     .collage-photo img {
-
         width: 100%;
 
         height: 100%;
 
-        display: block;
-
         object-fit: contain;
-
-        border: none;
-
-        border-radius: 0;
-
-        box-shadow: none;
     }
 
 
     /* =====================================
-       BUTTONS
+       MOBILE NAVIGATION BUTTONS
     ====================================== */
 
     .slide-button {
+        width: 40px;
 
-        width: 42px;
+        height: 40px;
 
-        height: 42px;
-
-        font-size: 21px;
-
-        top: 50%;
+        font-size: 20px;
 
         border-width: 1px;
-
-        background:
-            rgba(125, 45, 0, 0.72);
     }
-
 
     .prev {
-
-        left: 5px;
+        left: 4px;
     }
 
-
     .next {
-
-        right: 5px;
+        right: 4px;
     }
 
 
     /* =====================================
-       DOTS
+       MOBILE DOTS
     ====================================== */
 
     .slide-dots {
+        margin-top: 3px;
 
-        margin-top: 5px;
-
-        gap: 7px;
+        gap: 6px;
     }
 
-
     .dot {
-
         width: 8px;
 
         height: 8px;
@@ -1451,85 +1164,72 @@ body {
 
 
     /* =====================================
-       DIYAS
+       MOBILE DIYAS
     ====================================== */
 
     .diyas {
+        gap: 45px;
 
-        gap: 55px;
-
-        margin-top: 5px;
+        margin-top: 3px;
     }
 
-
     .diya {
-
-        font-size: 28px;
+        font-size: 26px;
     }
 
 
     /* =====================================
-       MESSAGE
+       MOBILE MESSAGE
     ====================================== */
 
     .message {
-
-        margin-top: 5px;
+        margin-top: 3px;
     }
-
 
     .message h2 {
-
-        font-size: 21px;
+        font-size: 20px;
     }
 
-
     .message p {
+        font-size: 11px;
+    }
 
-        font-size: 12px;
+    .stars {
+        font-size: 14px;
+
+        margin-top: 3px;
     }
 
 
     /* =====================================
-       WELCOME SCREEN
+       MOBILE WELCOME SCREEN
     ====================================== */
 
     .start-content {
-
         padding:
             15px
-            12px;
+            10px;
     }
-
 
     .start-om {
-
-        font-size: 52px;
+        font-size: 50px;
     }
-
 
     .start-content h1 {
-
-        font-size: 31px;
+        font-size: 30px;
     }
 
-
     .start-content p {
-
         font-size: 17px;
     }
 
-
     .start-diya {
-
-        font-size: 43px;
+        font-size: 42px;
 
         margin-bottom: 17px;
     }
 
-
     .start-button {
-
         padding:
             13px
             23px;
@@ -1537,17 +1237,13 @@ body {
         font-size: 16px;
     }
 
-
     .start-content h4 {
-
         margin-top: 25px;
 
         font-size: 15px;
     }
 
-
     .start-content h5 {
-
         margin-top: 15px;
 
         font-size: 13px;
@@ -1561,87 +1257,96 @@ body {
 
 @media (max-width: 380px) {
 
-    .page {
-
-        padding-top: 3px;
-    }
-
-
     .om {
-
-        font-size: 34px;
+        font-size: 32px;
     }
-
 
     .header h1 {
-
-        font-size: 27px;
+        font-size: 26px;
     }
 
-
     .header p {
-
         font-size: 14px;
     }
 
-
     .card-title {
-
-        font-size: 19px;
+        font-size: 18px;
     }
 
+
+    /* =====================================
+       SMALL PHONE IMAGES
+    ====================================== */
 
     .image-box {
-
         height:
-            calc(100dvh - 130px);
+            calc(100dvh - 115px);
     }
 
+
+    /* =====================================
+       SMALL PHONE VIDEO
+    ====================================== */
 
     .video-box {
-
         height:
-            calc(100dvh - 130px);
+            calc(100dvh - 95px);
     }
 
+    .video-box video {
+
+        /*
+           Increase actual video further
+           on small phones.
+        */
+
+        width: 155%;
+
+        height: 100%;
+
+        max-width: none;
+
+        max-height: none;
+
+        object-fit: contain;
+
+        object-position: center;
+    }
+
+
+    /* =====================================
+       SMALL PHONE COLLAGE
+    ====================================== */
 
     .ram-ganapati-collage {
-
         height:
-            calc(100dvh - 130px);
+            calc(100dvh - 115px);
     }
 
 
+    /* =====================================
+       SMALL PHONE BUTTONS
+    ====================================== */
+
     .slide-button {
+        width: 36px;
 
-        width: 37px;
-
-        height: 37px;
+        height: 36px;
 
         font-size: 18px;
     }
 
 
-    .prev {
-
-        left: 3px;
-    }
-
-
-    .next {
-
-        right: 3px;
-    }
-
+    /* =====================================
+       SMALL PHONE DIYAS
+    ====================================== */
 
     .diyas {
-
-        gap: 40px;
+        gap: 35px;
     }
-
 
     .diya {
-
-        font-size: 25px;
+        font-size: 24px;
     }
+
 }
